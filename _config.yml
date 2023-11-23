@@ -1,7 +1,34 @@
 ---
+permalink:      /:categories/:title/
+
+exclude:
+  - README.md
+
 remote_theme: pages-themes/hacker@v0.2.0
+
 plugins:
-- jekyll-remote-theme
+  - jekyll-remote-theme
 
 title: Taylor Chien
-description: A test
+description: "A Test"
+comment: This is a test
+
+author:
+  name: Taylor Chien
+  email: taylor@tchien.com
+  
+about: >
+    This is a test
+
+nav:
+  - name: Blog
+    url: /
+  - name: About
+    url: /about/
+
+footer:
+    - verb: Goodbye
+      action: Time to Leave
+
+    - verb: Hello
+      action: Time to Stay
