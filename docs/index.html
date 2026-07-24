@@ -7,7 +7,7 @@
   <meta name="description" content="Taylor Chien — Linux System Administrator. Networking, automation, and hardware." />
   <style>
     :root {
-      --bg:        #05080a;
+      --bg:        #000000;
       --panel:     #0b1013;
       --panel-2:   #0e1519;
       --border:    #16241d;
@@ -31,9 +31,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(ellipse at top, rgba(23,196,106,0.10), transparent 55%),
-        var(--bg);
+      background: var(--bg);
       color: var(--fg);
       font-family: var(--mono);
       font-size: 15px;
@@ -85,12 +83,7 @@
       z-index: 5;
       backdrop-filter: blur(4px);
     }
-    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-    .dot.r { background: #ff5f56; }
-    .dot.y { background: #ffbd2e; }
-    .dot.g { background: #27c93f; }
     .titlebar .path {
-      margin-left: 0.4rem;
       color: var(--dim);
       font-size: 0.82rem;
       letter-spacing: 0.03em;
@@ -241,9 +234,6 @@
 <body>
   <main class="window">
     <div class="titlebar">
-      <span class="dot r"></span>
-      <span class="dot y"></span>
-      <span class="dot g"></span>
       <span class="path">taylor@taypc6: ~</span>
     </div>
 
