@@ -33,6 +33,11 @@ domain **`www.taypc6.com`**. It is a static site with **no build step**.
 
 ## Deploying
 
-Commit to `main` and push. GitHub Pages redeploys automatically from `docs/`;
-there is nothing to build. To preview locally, serve the folder, e.g.
-`python3 -m http.server -d docs 8000`.
+Commit to `main` and push. The `.github/workflows/deploy.yml` GitHub Actions
+workflow publishes the `docs/` folder to GitHub Pages on every push to `main`
+(and can be run manually from the Actions tab). There is nothing to build.
+
+This requires the repo's Pages source to be set to **GitHub Actions**
+(Settings → Pages → Build and deployment → Source: "GitHub Actions").
+
+To preview locally, serve the folder, e.g. `python3 -m http.server -d docs 8000`.
