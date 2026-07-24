@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>taylor@taypc6</title>
-  <meta name="description" content="Taylor Chien — System Administration, Networking, Linux." />
+  <meta name="description" content="Taylor Chien — Linux System Administrator. Networking, automation, and hardware." />
   <style>
     :root {
       --bg:        #05080a;
@@ -195,11 +195,14 @@
       background: rgba(57,255,136,0.04);
     }
 
-    /* experience rows */
-    .job { margin: 0.2rem 0 1.4rem; }
-    .job .role { color: var(--green); }
-    .job .org { color: var(--cyan); }
-    .job .when { color: var(--dim); font-size: 0.85rem; }
+    /* experience / education / research rows */
+    .entry { margin: 0.2rem 0 1.5rem; }
+    .entry .role { color: var(--green); }
+    .entry .org { color: var(--cyan); }
+    .entry .when { color: var(--dim); font-size: 0.85rem; }
+    .entry .desc { margin: 0.35rem 0 0.4rem; }
+    .entry .repo { font-size: 0.85rem; }
+    .entry .repo::before { content: "└─ "; color: var(--dim); }
 
     footer {
       border-top: 1px solid var(--border);
@@ -247,8 +250,10 @@
     <nav aria-label="Sections">
       <a href="#about">about</a>
       <a href="#experience">experience</a>
+      <a href="#education">education</a>
       <a href="#skills">skills</a>
       <a href="#projects">projects</a>
+      <a href="#research">research</a>
       <a href="#contact">contact</a>
     </nav>
 
@@ -265,9 +270,11 @@
       <section id="about">
         <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> about.txt</p>
         <div class="out">
-          <p style="margin:0">Linux systems administrator with a background in networking, automation,
-          and hardware. I run high-availability infrastructure, automate everything I can, and keep a
-          sprawling home lab as a permanent testbed. <span class="comment"># placeholder — expand later</span></p>
+          <p style="margin:0">Linux systems administrator with a background in networking, automation, and
+          hardware. I keep high-availability infrastructure running at Clarkson University; before that I was
+          a cyber engineer at CACI. I automate whatever I can, run a sprawling home lab alongside a 150+-core
+          ARM/RISC-V/x86 testing cluster, and studied network and computer security at SUNY Poly — where I
+          researched hypervisor performance and ARM datacenters.</p>
         </div>
       </section>
 
@@ -275,21 +282,42 @@
       <section id="experience">
         <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">ls</span> <span class="flag">-la</span> ~/experience</p>
         <div class="out">
-          <div class="job">
+          <div class="entry">
             <div><span class="role">Linux System Administrator</span> — <span class="org">Clarkson University</span></div>
-            <div class="when">Jan 2024 – Present</div>
+            <div class="when">Jan 2024 – Present · Potsdam, NY</div>
             <ul>
-              <li>Migrated virtualization environment from VxRail to Proxmox</li>
-              <li>Maintain multiple high-availability, critical systems</li>
+              <li>Migrated the virtualization environment from VxRail to Proxmox</li>
+              <li>Maintain multiple high-availability, business-critical systems</li>
+              <li>Leading the migration to Rocky Linux 9</li>
+              <li>Manage and maintain the Puppet environment and codebase</li>
               <li>Part of a 24/7 on-call rotation</li>
             </ul>
           </div>
-          <div class="job">
+          <div class="entry">
             <div><span class="role">Cyber Engineer T2</span> — <span class="org">CACI Inc.</span></div>
-            <div class="when">Nov 2018 – Jul 2023</div>
+            <div class="when">Nov 2018 – Jul 2023 · Rome, NY</div>
             <ul>
-              <li>Worked in a small agile team on hardware and software maintenance</li>
-              <li>Prepared documentation to company standards for publication</li>
+              <li>Built, secured, and automated in-house cloud environments for customers</li>
+              <li>Automated deployment and configuration of RHEL and Ubuntu guests — SaltStack, then Ansible</li>
+              <li>Managed segmented networks across Juniper, HPE, Force10, and Cisco switching</li>
+              <li>Stood up hypervisor clusters on ESXi and KVM</li>
+              <li>Worked in a small agile team and authored documentation to company standards</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- education -->
+      <section id="education">
+        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> education.txt</p>
+        <div class="out">
+          <div class="entry">
+            <div><span class="role">B.S. in Network and Computer Security</span> — <span class="org">SUNY Polytechnic Institute</span></div>
+            <div class="when">Aug 2013 – May 2017 · Utica, NY</div>
+            <ul>
+              <li>GPA 3.47 overall, 3.72 in major; minor in Computer Information Systems</li>
+              <li>Researched hypervisors, ARM devices, and Linux system benchmarks for capstone and independent study</li>
+              <li>Worked part-time for the Computer Science department on web and network study</li>
             </ul>
           </div>
         </div>
@@ -309,7 +337,7 @@
           <div class="card">
             <h3>Operating Systems</h3>
             <div class="tags">
-              <span class="tag">Debian</span><span class="tag">Ubuntu</span><span class="tag">RHEL</span>
+              <span class="tag">Debian</span><span class="tag">Ubuntu</span><span class="tag">RHEL / Rocky</span>
               <span class="tag">FreeBSD</span><span class="tag">Proxmox</span><span class="tag">ESXi</span>
             </div>
           </div>
@@ -317,7 +345,7 @@
             <h3>Networking</h3>
             <div class="tags">
               <span class="tag">Cisco</span><span class="tag">HPE / Aruba</span><span class="tag">Juniper</span>
-              <span class="tag">Force10</span><span class="tag">MikroTik</span>
+              <span class="tag">Force10</span><span class="tag">MikroTik</span><span class="tag">Cumulus</span>
             </div>
           </div>
           <div class="card">
@@ -335,10 +363,33 @@
         <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">ls</span> ~/projects</p>
         <div class="out">
           <ul>
-            <li><span class="lead">home-lab/</span> — Proxmox VE hypervisors and TrueNAS storage with geo-redundant backups; a permanent testbed for services.</li>
-            <li><span class="lead">arm-fleet/</span> — Mass-device testing cluster: 150+ cores and 200&nbsp;GB RAM across ARM, RISC-V, and x86 boards.</li>
-            <li><span class="lead">fab-lab/</span> — 3D-printing setup for custom cases, brackets, and spare parts supporting the labs.</li>
+            <li><span class="lead">home-lab/</span> — Proxmox VE hypervisors running Debian, Ubuntu, Alpine, and FreeBSD; TrueNAS Scale storage with geo-redundant backups. A permanent testbed for services.</li>
+            <li><span class="lead">arm-fleet/</span> — Mass-device testing cluster for automation at scale: 150+ CPU cores and 200&nbsp;GB RAM across 100+ ARM, RISC-V, and x86 boards.</li>
           </ul>
+        </div>
+      </section>
+
+      <!-- research -->
+      <section id="research">
+        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> research.txt</p>
+        <div class="out">
+          <div class="entry">
+            <div><span class="role">A Comparison of Pre-Built Hypervisors</span></div>
+            <div class="when">SUNY Poly · Independent Study · 2017</div>
+            <p class="desc">Benchmarked Proxmox VE, XenServer, Hyper-V, and VMware ESXi against a
+            bare-metal baseline across 14 Dell servers. Proxmox came out ahead — top scores on over half the
+            benchmarks, the most robust installer, and the richest feature set.</p>
+            <div class="repo"><a class="link" href="https://github.com/chientaylor/hypervisor-comparison-paper">github.com/chientaylor/hypervisor-comparison-paper</a></div>
+          </div>
+          <div class="entry">
+            <div><span class="role">Building an ARM-based Datacenter</span></div>
+            <div class="when">SUNY Poly · Independent Study · 2017</div>
+            <p class="desc">Built a small datacenter from ~18 heterogeneous ARM single-board computers
+            running LDAP, DNS, mail, and web apps, to see what enterprise services commodity ARM could deliver.
+            Conclusion: the consumer ARM ecosystem was still too fractured to rely on — though a few boards
+            (Odroid XU4, Udoo Quad) held up well throughout.</p>
+            <div class="repo"><a class="link" href="https://github.com/chientaylor/arm-datacenter-paper">github.com/chientaylor/arm-datacenter-paper</a></div>
+          </div>
         </div>
       </section>
 
