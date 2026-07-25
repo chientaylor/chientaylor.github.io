@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connecting OpenWRT to my Device-based VPN — taylor@taypc6</title>
+  <meta name="description" content="If you’ve seen my previous post on this, I set up a VPN for connecting devices and their remote networks back to my home network. Now, we’re going to " />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/connecting-openwrt-to-my-device-based-vpn</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> connecting-openwrt-to-my-device-based-vpn.md</p>
+      <article class="post">
+        <h1>Connecting OpenWRT to my Device-based VPN</h1>
+        <div class="post-meta"><span class="date">Jun 3, 2023</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Random Projects</span></span></div>
+        <div class="prose">
+<p>If you’ve seen my <a href="https://tchien.com/technical-ramblings/2023/6/2/connecting-openwrt-to-opnsense-with-openvpn" rel="noopener" target="_blank">previous post</a> on this, I set up a VPN for connecting devices and their remote networks back to my home network. Now, we’re going to deal with the remote devices in question.</p><p>Please note, <strong>THIS DOES NOT TAKE FIREWALL RULES INTO ACCOUNT</strong>. I’m not going over firewall settings because the way I want to use my network might be different from how you want to use yours. It’s up to you to determine how you want to use your firewall, and how much security you want (if any). The way I set this up, <strong>ANY DEVICE </strong>this OpenWRT device serves will connect <strong>BY DEFAULT </strong>back through your OpenVPN network.</p><h2>OpenWRT Configuration</h2><p>Setting up the original OpenWRT device is up to you, I’m going to be using a ClearFog Pro for this example, since it has wired, WiFi, and a Cellular Modem.</p><p>First, get OpenWRT set up and working at a minimum. Mostly we need this because we need packages.</p><pre><code>opkg update
+opkg install luci-app-openvpn openvpn-openssl</code></pre><h3>OpenVPN Client</h3><p>The OpenVPN operation is pretty simple. Once the packages are installed, a new tab for VPN will appear at the top, with OpenVPN as a category within. Delete all the sample server configs, then under “OVPN configuration file upload” upload your config file, then enable it, and click ‘Save &amp; Apply” at the bottom.</p>
+
+<img loading="lazy" src="images/92d16c30-27d9-47c1-8430-905dc433cc25.png"/>
+
+<p>What the final result should look like</p>
+
+
+<p>Next, we need to add an interface to the OpenWRT device to allow us to use this VPN connection with the firewall. Under Network &gt; Interfaces, click “Add new interface…”. Set the protocol to Unmanaged (OpenVPN will handle the addressing) and the device to tun0 (or your tun device if you changed it).</p>
+
+<img loading="lazy" src="images/bcabcebc-aa31-4d5e-ab8e-1b8f3c9fda7b.png"/>
+
+<p>The final result</p>
+
+
+<p>Next, edit that interface that was just created, and go to Firewall Settings. In the drop down menu, there will be a text box to create a new zone. The VPN interface should end up in this zone, not WAN or LAN or unspecified.</p>
+
+<img loading="lazy" src="images/64bce457-1ee4-4312-bc02-1dc4ef991487.png"/>
+
+<p>Under Network &gt; Firewall, click Edit on the “lan =&gt; wan” entry and change the values so that the “allowed forward to destination zones” and “allowed forward from source zones” fields are both your new VPN firewall zone.</p>
+
+<img loading="lazy" src="images/e4e524dc-474b-4c1f-9a99-cca6c18de9f9.png"/>
+
+<p>LAN Zone Settings</p>
+
+
+
+<img loading="lazy" src="images/6fe5a0df-1742-4c46-8828-9722a1cc9068.png"/>
+
+<p>The final result</p>
+
+
+<p>With this done (and Saved and Applied!) you should now be able to get from your OpenVPN server to your OpenVPN client (this device).</p>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2023</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

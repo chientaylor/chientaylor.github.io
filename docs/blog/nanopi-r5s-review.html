@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanoPi R5S Review — taylor@taypc6</title>
+  <meta name="description" content="This is a copy of a review I wrote for this device for a different blog in 2022:The NanoPi R5S is a small router board from FriendlyArm, with two 2.5G" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/nanopi-r5s-review</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> nanopi-r5s-review.md</p>
+      <article class="post">
+        <h1>NanoPi R5S Review</h1>
+        <div class="post-meta"><span class="date">Dec 22, 2022</span><span class="cats"><span class="cat">SBCs</span><span class="cat">SBC Review</span></span></div>
+        <div class="prose">
+<p>This is a copy of a review I wrote for this device for a different blog in 2022:</p><p>The NanoPi R5S is a small router board from FriendlyArm, with two 2.5Gb Ports and one Gigabit port.</p><h2>FriendlyELEC Provided OS</h2><p>2022-12-22</p><p>Flashing images can be interesting. By default, the R5S boots from the SD card slot, but FriendlyArm provides images that flash the OS to the onboard eMMC. However, all of these images are provided through a Google Drive link, which I personally find fairly sketchy.</p><p>The documentation for flashing the OS is solid, which makes the process simple.</p><p><a href="https://wiki.friendlyelec.com/wiki/index.php/NanoPi_R5S#Install_OS_to_eMMC" rel="noopener" target="_blank">https://wiki.friendlyelec.com/wiki/index.php/NanoPi_R5S#Install_OS_to_eMMC</a></p><h3>FriendlyWRT (Router)</h3><p>2022-12-22</p><p>FriendlyWRT is fine. It works as advertised, but I wouldn’t put my whole home on it. I would much prefer an image from OpenWRT itself, but this will have to do. The different versions are interesting, as OpenWRT by default doesn’t usually come with this much random stuff pre-installed.</p><h3>Debian 10 Buster (Server)</h3><p>2022-12-22</p><p>Aside from the obvious issue with it not being Debian 11, the install worked fine. I had the same reservations here as for the FriendlyWRT image source, but the install is fairly clean.</p><h2>DietPi</h2><p><a href="https://dietpi.com/downloads/images/DietPi_NanoPiR5S-ARMv8-Bullseye.7z" rel="noopener" target="_blank">https://dietpi.com/downloads/images/DietPi_NanoPiR5S-ARMv8-Bullseye.7z</a></p><p>2022-12-22</p><p>DietPi is interesting, as it’s meant to be an easier-to-use OS with a lot of interactive menus and automation for SBCs. I started testing it with this board, as Armbian doesn’t support this specific SBC.</p><p>To start, I used the pre-programming system for DietPi to set my IP address (I bought the version without a MAC chip) and hostname, among other stuff. This is done by modifying the /boot/dietpi.txt file, similar to how Raspberry Pi OS works. First login brings you through a setup process, which can be a little grating if all you want to do is run an Ansible playbook. After this script’s initial run, DietPi will install with your chosen options.</p><p>DietPi offers some very nice options, showing CPU info as something it offers by default. It also has an option to set a default password for all services that can be run and installed by the automated installer.</p><p>Flashing DietPi to the eMMC turned out to be a bit of an annoyance, but it was fairly straightforward. The first step was to boot into the SD card, and then use the SD environment to flash the DietPi image to the eMMC. With only 8GB, it’s fairly tight, but not a major issue.</p>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2022</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

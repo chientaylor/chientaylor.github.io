@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debian Networking Part 3 - VLANs — taylor@taypc6</title>
+  <meta name="description" content="VLANsVLANs are used to virtually separate traffic that shares the same physical network. Usually, servers don&#x27;t need VLAN interfaces, since it defeats" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/debian-networking-part-3-vlans</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> debian-networking-part-3-vlans.md</p>
+      <article class="post">
+        <h1>Debian Networking Part 3 - VLANs</h1>
+        <div class="post-meta"><span class="date">Mar 6, 2018</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Debian Networking</span></span></div>
+        <div class="prose">
+<h2>VLANs</h2><p>VLANs are used to virtually separate traffic that shares the same physical network. Usually, servers don't need VLAN interfaces, since it defeats the entire point of separating traffic. However, sometimes that connection is necessary. For example, if you have a storage network which has no other way of being accessed. However, by the time you have a reason to separate your storage network, you will likely have a dedicated physical network for it to avoid bottlenecks on a shared VLAN interface.</p><p>However, the most common use case by far for VLANs is to separate hosts from servers and other sensitive devices, like printers and IP cameras. When dealing with trunks on servers, most are linked to bridges, and then served to VMs.</p><h3>Single VLAN</h3><p>If you only need to be on a single VLAN with one IP, then here's a small sample. This uses a tagged VLAN, which must be configured on the switch to work.</p><pre><code># Debian network configuration for a single VLAN interface
+# Copy into /etc/network/interfaces
+#
+# Prerequisites:
+#        apt install vlan
+#        Note: DO NOT INSTALL THIS PACKAGE ON PROXMOX. VLANS ARE HANDLED BY THE "proxmox-ve" PACKAGE.
+
+# Loopback interface
+auto lo
+iface lo inet loopback
+
+# Default primary network interface
+iface eth0 inet manual
+
+# VLAN Interface
+# Note the .2 at the end of the interface name. This indicates that the VLAN tag is 2.
+auto eth0.2
+iface eth0.2 inet manual
+    vlan-raw-device eth0
+    address 192.168.1.2
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameservers 8.8.8.8 4.2.2.2
+    pre-up ifup eth0
+    post-down ifdown eth0
+</code></pre><h3>Single VLAN Switch Configuration</h3><pre><code>## Cisco
+interface gi1/1
+ description "Connection to eth0"
+ switchport trunk allowed vlan 2
+ switchport mode trunk
+!
+
+## HP
+trunk 1 trk1 
+interface 1
+ name "Connection to eth0"
+ exit
+vlan 2
+ name "Server VLAN"
+ tagged trk1
+</code></pre><h2>Mix of Untagged and Tagged VLANs</h2><p>WHen dealing with VLANs, there are two kinds; untagged and tagged. Each interface can only have one untagged VLAN, but can have multiple thousands of tagged interfaces.</p><p>Tagged and untagged interfaces can occupy the same physical interfaces. That's what VLANs were designed to do. </p><pre><code>#
+# Debian network configuration for a single VLAN interface
+# Copy into /etc/network/interfaces
+#
+# Prerequisites:
+#        apt install vlan
+#        Note: DO NOT INSTALL THIS PACKAGE ON PROXMOX. VLANS ARE HANDLED BY THE "proxmox-ve" PACKAGE.
+
+# Loopback interface
+auto lo
+iface lo inet loopback
+
+# Default primary network interface
+auto eth0
+iface eth0 inet static
+   address 192.168.0.2
+   netmask 255.255.255.0
+   gateway 192.168.0.1
+   dns-nameservers 8.8.8.8 8.8.4.4 4.2.2.2
+
+# VLAN Interface
+auto eth0.2
+iface eth0.2 inet manual
+    vlan-raw-device eth0
+    address 192.168.1.2
+    netmask 255.255.255.0
+# The gateway and DNS servers are commented out, and will not activate
+# This is due to the fact that more than one default gateway is disallowed, as it would mess with the system routing table
+#   gateway 192.168.1.1
+#   dns-nameservers 8.8.8.8 4.2.2.2
+</code></pre>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2018</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

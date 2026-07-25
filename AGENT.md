@@ -11,8 +11,15 @@ domain **`www.taypc6.com`**. It is a static site with **no build step**.
 
 - `docs/` — the published site. GitHub Pages is configured to serve from this
   folder on the `main` branch.
-  - `docs/index.html` — the entire site (single, self-contained file: HTML, CSS,
+  - `docs/index.html` — the home page (single, self-contained file: HTML, CSS,
     and a few lines of JS inline; no external dependencies).
+  - `docs/blog/` — the "Technical Ramblings" blog: `index.html` (post listing),
+    one static `<slug>.html` per post, a shared `style.css` (same terminal
+    theme), and `images/` (post images). These posts were recovered from the
+    Internet Archive's capture of the old Squarespace site at `tchien.com`
+    (the Squarespace/WordPress XML export came back empty). Source of truth for
+    the recovery was the archived RSS feed. Posts are plain static HTML now —
+    edit them directly.
   - `docs/CNAME` — custom-domain config for Pages (`www.taypc6.com`). Must live
     alongside the published content, i.e. inside `docs/`.
 - `README.md`, `AGENT.md` — repo docs. **Not** part of the published site; keep

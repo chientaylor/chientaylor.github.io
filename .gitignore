@@ -1,0 +1,7 @@
+# Local Squarespace/WordPress export files (came back empty; kept locally only)
+Squarespace-Wordpress-Export-*.xml
+
+# Saved "Save Page As" copies of the old Squarespace posts (JS shells, no
+# content; used only to recover current post titles). Kept locally, not published.
+*Taylor Chien.html
+*Taylor Chien_files/

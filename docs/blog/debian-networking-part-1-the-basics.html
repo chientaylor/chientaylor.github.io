@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debian Networking Part 1 - The Basics — taylor@taypc6</title>
+  <meta name="description" content="PrefaceI&#x27;ve been working with Debian and its various flavors as a daily driver for several years now. It truly is a universal operating system. From h" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/debian-networking-part-1-the-basics</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> debian-networking-part-1-the-basics.md</p>
+      <article class="post">
+        <h1>Debian Networking Part 1 - The Basics</h1>
+        <div class="post-meta"><span class="date">Mar 6, 2018</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Debian Networking</span></span></div>
+        <div class="prose">
+<h2>Preface</h2><p>I've been working with Debian and its various flavors as a daily driver for several years now. It truly is a universal operating system. From hundred-terabyte servers to simple ARM routers, I've run it on everything that it's feasible to run it on.</p><p>For me, the reason I love Debian is it's pure simplicity. Everything is built for bare-bones, little-effort-required simplicity. Installing packages, managing updates, changing network settings, managing services, it's all built to be simple.</p><p>This is the start of a series of guides on Debian’s networking setup. This is also the same networking setup as Ubuntu up to version 16.04. </p><h2>The Basics</h2><p>On Debian, all network configuration goes in one file.</p><pre><code># Default Debian Network Configuration
+## The loopback interface 
+auto lo
+iface lo inet loopback
+## The first Ethernet interface
+auto eth0
+iface eth0 inet dhcp
+## End</code></pre><p>This is a bare-bones configuration. It establishes the loopback interface, and has the first Ethernet interface request an IP through DHCP.</p><h2>Static Addresses</h2><p>Assigning a static address is just as easy, if a little longer.</p><pre><code># Static IP Debian Network Configuration 
+## The loopback interface
+auto lo
+iface lo inet loopback
+## The first Ethernet interface
+auto eth0
+iface eth0 inet static
+ address 192.168.0.2              # The address for the server
+ netmask 255.255.255.0            # The subnet mask for the network
+ gateway 192.168.0.1              # The address of the router
+ dns-nameservers 1.1.1.1 1.0.0.1  # DNS servers
+ dns-domain example.com           # DNS domain
+ dns-search example.com           # DNS search</code></pre><p>The DNS options override everything in /etc/resolv.conf.</p>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2018</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

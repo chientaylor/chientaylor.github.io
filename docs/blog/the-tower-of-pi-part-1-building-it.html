@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Tower of Pi - Part 1 - Building It — taylor@taypc6</title>
+  <meta name="description" content="OverviewThis is a tower of Raspberry Pis. There’s not much more to it than that.It’s a fairly simple build; ever since the Raspberry Pi B+, all Raspbe" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/the-tower-of-pi-part-1-building-it</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> the-tower-of-pi-part-1-building-it.md</p>
+      <article class="post">
+        <h1>The Tower of Pi - Part 1 - Building It</h1>
+        <div class="post-meta"><span class="date">Nov 24, 2020</span><span class="cats"><span class="cat">SBCs</span><span class="cat">Tower of Pi</span></span></div>
+        <div class="prose">
+<h2>Overview</h2><p>This is a tower of Raspberry Pis. There’s not much more to it than that.</p><p>It’s a fairly simple build; ever since the Raspberry Pi B+, all Raspberry Pis since then have had their mounting holes in the same place. This allows Raspberry Pis to stack.</p><p>I have a lot of Pis from an old project, and a lot of new Pis to restart it. There are commercial solutions for stackable cases and rackmounting and other such ideas out there, but they were all either too complicated, too expensive, or a combination of both.</p><p>Recently, however, I discovered the existence of threaded rod. It’s an incredibly simple thing, just a length of rod that has threads. Not something that should be surprising. But it’s an incredibly simple solution for mounting a lot of Pis in a stack. </p><p>I used steel 500mm rod, because it was cheap, and just long enough to fit all my Pis (21, if you wanted to know) with a bit of room for more.</p><p>It’s also simple to assemble. Just put on a locking nut, a 16mm spacer, then a Pi with ports facing the locking nuts, then a 20mm spacer (16mm is to short, because then the contacts from the USB ports touch the enclosures for the USB ports on the next Pi). Repeat the 20mm spacer and Pi until no more can be fit on.</p>
+
+<img loading="lazy" src="images/1606278233148-6HC8R7PHW20RE7TNALGB.png"/>
+
+<p>The three Pis closest to the camera are not actually mounted in the stack. However, with the extra rod at the end, it gives a good estimate of how many pis can actually fit on a section of 500mm threaded rod.</p>
+
+
+<p>While assembling, the tower does feel very flimsy. However, once the nuts on the end are on and tightened down, the tower is shockingly rigid.</p><p>The only problem is that the ‘tower’ pretty much has to lay on its side. Hooking up any cables at all to the Pis on the top makes it unstable. I just ended up laying them on the GPIO side, since there’s no ports there anyways.</p><p>The other part to the Pi tower is cooling. While these Pis could run passive, I decided not to chance it and hooked up a wall of fans to a fan controller, then plugged that in to an ATX power supply. I chose quiet fans for this, so even with all of them running, it’s inaudible over the other noisy things in my office.</p><p>The easiest way to hook these up is with zip-ties, just strapping them to each other. I took a more technical approach because I wanted mine to look good, and instead put M3 screws and nuts through each of the holes on the fans, then put a zip-tie between the screws in the corner of each fan. The end result is a bit less stable, but also looks better (to me) and lets me install fan grills later if I wanted to.</p><h2>Conclusion</h2><p>There’s not much more to say about this really. It’s simple. Assembly, once I had the parts, was easy.</p><h3>Parts List - Tower</h3><p>4x 500mm L by M2.5 threaded rod</p><p><a href="https://www.mcmaster.com/90024A215/" rel="noopener" target="_blank">https://www.mcmaster.com/90024A215/</a></p><p>100x 20mm M2.5 unthreaded spacer</p><p><a href="https://www.mcmaster.com/94669A114/" rel="noopener" target="_blank">https://www.mcmaster.com/94669A114/</a></p><p>1 pack of M2.5 locking nuts</p><p><a href="https://www.mcmaster.com/93625A102/" rel="noopener" target="_blank">https://www.mcmaster.com/93625A102/</a></p><p>4x 16mm M2.5 unthreaded spacer</p><p><a href="https://www.mcmaster.com/94669A110/" rel="noopener" target="_blank">https://www.mcmaster.com/94669A110/</a></p><h3>Parts List - Fan Stack</h3><p>28x Screws and Nuts</p><p>Salvaged from other projects</p><p>Noctua 92mm Fan x 7</p><p><a href="https://www.amazon.com/gp/product/B00KF7OMTI/" rel="noopener" target="_blank">https://www.amazon.com/gp/product/B00KF7OMTI</a></p><p>Zip Ties</p><p>They’re out there, somewhere. Twist ties and bread ties also work</p>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2020</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debian Networking Part 2 - Bonding — taylor@taypc6</title>
+  <meta name="description" content="Bonded InterfacesBonds are multiple network interfaces that are joined into one single logical interface. These can be used to increase throughput, de" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/debian-networking-part-2-bonding</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> debian-networking-part-2-bonding.md</p>
+      <article class="post">
+        <h1>Debian Networking Part 2 - Bonding</h1>
+        <div class="post-meta"><span class="date">Mar 24, 2018</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Debian Networking</span></span></div>
+        <div class="prose">
+<h2>Bonded Interfaces</h2><p>Bonds are multiple network interfaces that are joined into one single logical interface. These can be used to increase throughput, decrease latency, or fail over to a second link in the case of an outage.</p><h3>Multiple Interface Bonding with LACP</h3><p>LACP, or 802.3ad, is an Ethernet protocol used to bond multiple lines into a single logical line. It requires support from the switch, the same link speed across all interfaces, and some extra configuration, but it is very simple to set up and very reliable if done correctly.</p><pre><code># Bonded Interface Debian Network Configuration
+## The loopback interface
+auto lo
+iface lo inet loopback
+## The first Ethernet interface
+iface eth0 inet manual   # The "manual" entry allows the interface to be brought up and down with no IP information configured
+## The second Ethernet interface
+iface eth1 inet manual
+## The third Ethernet interface
+iface eth2 inet manual
+## The primary network bond
+auto bond0
+iface bond0 inet static
+ address 192.168.0.2               # The bond's IP
+ netmask 255.255.255.0             # The bond's subnet mask
+ gateway 192.168.0.1               # The router
+ bond-slaves eth0 eth1 eth2        # This defines the Ethernet interfaces that this bond will control
+ bond-mode 4                       # Bond mode 4 is LACP. 802.3ad can also be used here.
+ bond-miimon 100                   # This defines the time that the OS will probe the interfaces to check their up/down status. 100 is a good default.
+ dns-nameservers 1.1.1.1 1.0.0.1   # The DNS servers
+ pre-up ifup eth0 eth1 eth2        # This enables all three interfaces before this bond goes up
+ post-down ifdown eth0 eth1 eth2   # This disables all three interfaces after the bond goes down
+## End
+</code></pre><h4>LACP Switch Configuration</h4><p>LACP also requires more configuration from the switches. Below are samples of Cisco and HP configuration, but for other switch manufacturers, refer to your user manual.</p><pre><code>## Cisco
+interface gi1/1
+ description "Connection to eth0"
+ ! Specific VLANs and trunk config can be configured in the port channel
+ channel-group 1 mode active
+ channel-protocol lacp
+!
+interface gi1/2
+ description "Connection to eth1"
+ ! Specific VLANs and trunk config can be configured in the port channel
+ channel-group 1 mode active
+ channel-protocol lacp
+!
+interface gi1/3
+ description "Connection to eth2"
+ ! Specific VLANs and trunk config can be configured in the port channel
+ channel-group 1 mode active
+ channel-protocol lacp
+!
+interface port-channel 1
+ description [ LACP link for gi1/1, gi1/2, and gi1/3 ]
+ switchport access vlan 1
+ switchport mode access
+!
+
+## HP
+trunk 1-3 trk1 lacp
+interface 1
+ name "Connection to eth0"
+ exit
+interface 2
+ name "Connection to eth1"
+ exit
+interface 3
+ name "Connection to eth2"
+ exit
+vlan 1
+ name "Default VLAN"
+ untagged trk1</code></pre><h4>Note: Load-balancing with ALB or XOR</h4><p>ALB, or Adaptive Load Balancing, is an alternate way of setting up a multi-port fail-over trunk. This method doesn't require switch support, but it's also not as powerful. LACP is far more resilient due to its switch support, but when working with dumb switches, ALB may be all that's available.</p><p>ALB is configured exactly the same as LACP, except that ALB will use "bond mode 6" instead of "bond mode 4".</p><p>On the other hand, XOR balancing checks that traffic in a specific chain always enters and leaves through the same MAC Address. XOR is balance mode 2. It also requires no switch configuration.</p><h3>Active Backup Bonds</h3><p>Active Backup is another type of bond that is usually used in laptops or other devices with multiple interfaces that are not always on the same network. This method is very different from LACP, in that only one interface will be active at any given time. This bond type is very different to set up from LACP. It does not require the switch, but Active Backup can be used to balance between multiple LACP or any other links.</p><pre><code># Bonded Interface Debian Network Configuration
+## The loopback interface
+auto lo
+iface lo inet loopback
+## The first Ethernet interface
+iface eth0 inet manual   # The "manual" entry allows the interface to be brought up and down with no IP information configured
+## The second Ethernet interface
+iface eth1 inet manual
+## The third Ethernet interface
+iface eth2 inet manual
+## The primary network bond
+auto bond0
+iface bond0 inet static
+ address 192.168.0.2               # The bond's IP
+ netmask 255.255.255.0             # The bond's subnet mask
+ gateway 192.168.0.1               # The router
+ bond-primary eth0                 # The interface preferred by the bond, in this case eth0
+ bond-slaves eth0 eth1 eth2        # This defines the Ethernet interfaces that this bond will control
+ bond-mode 1                       # Bond mode 1 is Active Backup
+ bond-miimon 100                   # This defines the time that the OS will probe the interfaces to check their up/down status. 100 is a good default.
+ dns-nameservers 1.1.1.1 1.0.0.1   # The DNS servers
+ pre-up ifup eth0 eth1 eth2        # This enables all three interfaces before this bond goes up
+ post-down ifdown eth0 eth1 eth2   # This disables all three interfaces after the bond goes down
+</code></pre><p>However, this is not all Active Backup can do. Say, for example, this was a laptop. All interfaces would need to be able to switch over if one was disabled. </p><pre><code># Bonded Interface Debian Network Configuration
+## The loopback interface
+auto lo
+iface lo inet loopback
+## An Ethernet Interface
+auto eth0
+iface eth0 inet manual
+## A Wireless interface
+auto wlan0
+iface wlan0 inet manual
+    wpa-conf /etc/network/wpa.conf
+## The primary network bondauto bond0
+iface bond0 inet dhcp
+#address 192.168.0.2               # The bond's IP, disabled for DHCP
+#netmask 255.255.255.0             # The bond's subnet mask, disabled for DHCP
+#gateway 192.168.0.1               # The router, disabled for DHCP
+ bond-primary eth0                 # The interface preferred by the bond, in this case eth0
+ bond-slaves eth0 wlan0            # This defines the Ethernet interfaces that this bond will control
+ bond-mode 1                       # Bond mode 1 is Active Backup
+ bond-miimon 100                   # This defines the time that the OS will probe the interfaces to check their up/down status. 100 is a good default.
+ dns-nameservers 1.1.1.1 1.0.0.1   # The DNS servers
+ pre-up ifup eth0 wlan0            # This enables all three interfaces before this bond goes up
+ post-down ifdown eth0 wlan0       # This disables all three interfaces after the bond goes down
+</code></pre>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2018</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenVPN for remote routers on OPNSense — taylor@taypc6</title>
+  <meta name="description" content="What if you could ship a device to someone with a working router, and when they connected it, you could connect through it just like you were on that " />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/openvpn-for-remote-routers-on-opnsense</span></div>
+    <nav aria-label="Blog navigation">
+      <a href="../">home</a>
+      <a href="./">blog</a>
+    </nav>
+    <div class="screen">
+      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> openvpn-for-remote-routers-on-opnsense.md</p>
+      <article class="post">
+        <h1>OpenVPN for remote routers on OPNSense</h1>
+        <div class="post-meta"><span class="date">Jun 2, 2023</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Linux Ramblings</span><span class="cat">Random Projects</span></span></div>
+        <div class="prose">
+<p>What if you could ship a device to someone with a working router, and when they connected it, you could connect through it just like you were on that remote network. If you wanted, you could even move it to another place, or even use it with a cellular modem, with all the benefits of being local?</p><p>One of the frustrations of this process is that it’s not as straightforward as you might think. Or rather, it is as straightforward as you think, but the way to do it isn’t what’s advertised on the tin, so to speak.</p><h2>OpenVPN on OPNSense</h2><p>To start, I’m using an OpenVPN server. I’m not going to go too in depth with that setup, because it’s actually quite straightforward and well documented. You need to set up a CA, and then a Certificate for your OpenVPN server.</p><p>Where this starts to get a bit strange is the next step. Our devices are going to be OpenWRT running on a variety of ARM SBCs and travel routers. We need the ability for them all to connect in, possibly at the same time, with no intervention, but critically, with no storing of plaintext credentials on the remote device. This will be an SSL/TLS only setup.</p>
+
+<img loading="lazy" src="images/606810f0-9c66-4768-b559-feb2387bd230.png"/>
+
+<p>VPN Port ommited, but the default 1194 is fine</p>
+
+
+<p>The critical bit is that this VPN is NOT set as Peer-to-Peer, but as Remote Access (SSL/TLS). This is done for two very important reasons. </p><p>The first reason for using the Remote Access scheme is that, while Peer-to-peer is technically what we want, in P2P mode the OpenVPN server does not push any information to the client. This is normally a good thing, but in this particular case, I’m not trying to simply create a connection, I’m trying to configure a remote device, which may require a poke when being configured, since the location it’s starting isn’t static.</p><p>The second reason is that it helps another tool, OPNSense’s Client Export utility, work in the way we want it to. In Peer-to-Peer mode, it’ll work, but in Remote Access mode, the generated ovpn file is much more usable.</p><p>Also, in the above there’s UDP4 specified. This is because without that, OpenVPN will try both IPv4 and IPv6, which can cause a lot of logging overhead. Because this is only using IPv4, we’re setting it to UDP4 to avoid that logging message. </p>
+
+<img loading="lazy" src="images/c05d6206-2daa-4f7d-b5c0-72b01a95d319.png"/>
+
+<p>My CA setup is a CA, then an Intermediate. Set this up however you like.</p>
+
+
+<p>The Cryptographic settings are where we enter the Your Mileage May Vary zone. Almost all of this is down to how YOUR environment is set up. I have mine set up as a CA with Intermediates, and then a CRL and Server Certificate from that intermediate. </p><p>The only piece that needs to be set here is the TLS Authentication section. Either set it to Authentication, or Authentication and Encryption. This means that in order to open a connection to this OpenVPN instance at all, you need to have that TLS key.</p>
+
+<img loading="lazy" src="images/08f8c195-fec2-455f-a2e9-b75fb7d878aa.png"/>
+
+<p>The Tunnel Settings section</p>
+
+
+<p>The only bits to note here are that Redirect Gateway is on, and Duplicate Connections must remain unchecked. Inter-Client Communication is up to you, as is the actual network range you are using. The Tunnel Network must not overlap with any other network on your device. It also must not overlap with any network on the remote devices either.</p><p>Under the Client Settings, the only thing you need to check is the Dynamic IP. Only check DNS Servers if you run your own, since OpenWRT has a system we’re going to take advantage of later.</p><h3>Devices</h3><p>Let’s say we have a small travel router we want to use with a cellular modem. It’s going to need a trusted certificate, so set one up. How it’s made is up to you, but two things are very important.</p><p>First, the certificate must be Combined Client/Server. This is due to a quirk of usage, specifically since our device is technically a server, yet in this case it needs to authenticate like a client, so it must have client flags.</p><p>Second, you have to have a unique Common Name, since this Common name (not the Descriptive name) will be the name of your device.</p><p>Now with that certificate made, move back to the OpenVPN section and go to Client Specific Overrides. </p>
+
+<img loading="lazy" src="images/58a4e610-9529-4f87-a5fc-47eadcb81084.png"/>
+
+<p>Create an override and put in the exact name you gave for the Common Name. Now, any connection made to this VPN with that Certificate will pick up the information in this override.</p>
+
+<img loading="lazy" src="images/3b1e78c4-5169-4d5f-9561-61819e29df32.png"/>
+
+<p>The IPv4 Tunnel Network field is actually a bit misleading. Because we already configured our network in the base VPN, we only need the IP this device will use when connecting to the VPN. This means that the client that connects to this VPN using the certificate we made above will always be at this IP. This is why we must also make a new certificate for every new device we want to connect.</p><p>Now, the remote network on our travel router is 172.16.0.0/24. If we make our local router aware of this, then it can route packets to that network. While not strictly necessary, this can be very handy for connecting to services or devices on that network from the networks connected to the OPNSense router.</p><p>This can also be used to connect to something that’s not an OpenWRT device, such as a connection to a network hosted on a hosting service like DigitalOcean or AWS. If your local router is aware of it, it can route to it.</p><p>Sorta.</p><h3>Where it starts to get messy (Interface, Gateway, and Route setup)</h3><p>This is where what’s in the OpenVPN configuration is partially a lie. In order for this to work, you will also need to set up an interface, a gateway, and a static route.</p><p>The interface is relatively straightforward. Assign your VPN interface to an OPT item (it will be an ‘ovpns’ interface). Then, in the configuration of that interface, simply make sure the interface is enabled. That’s it.</p>
+
+<img loading="lazy" src="images/84aa0f51-34c7-44bc-a182-9ad39e636d3c.png"/>
+
+<p>Under Interfaces &gt; Assignments</p>
+
+
+
+<img loading="lazy" src="images/bcbf7c8c-193b-4741-b070-85bf3bf49905.png"/>
+
+<p>All that is needed for this interface</p>
+
+
+<p>The reason for this is that the OpenVPN server will handle IP addressing, so OPNSense doesn’t need to configure it in any way. However, we need in interface to set up a gateway, and we need a gateway to set up a static route.</p>
+
+<img loading="lazy" src="images/4e184942-9d26-412c-85a6-99114d3cf72e.png"/>
+
+<p>The first thing to note is the IP address, which is what was configured in the override.</p><p>The second thing is to enable Gateway Monitoring. It’s very likely this gateway will go up and down, so having some statistics or other information on it will be a good idea.</p><p>The third thing is the Interface. This should be the interface you just made for this VPN instance.</p><p>Now, onto the static route.</p>
+
+<img loading="lazy" src="images/e39fc3e9-bd50-4f28-a359-9c5827f56eb0.png"/>
+
+<p>The Network Address is the remote network of the Travel Router</p>
+
+
+<h3>Finishing Up with OPNSense</h3><p>The last thing to do is to go to the OpenVPN Client Export tool and use it to bring out our configuration.</p>
+
+<img loading="lazy" src="images/32fcb873-cc54-4ccc-b17f-029acc81d998.png"/>
+
+<p>Replace the Hostname and Port with your own</p>
+
+
+<p>Click on the little download icon next to the Descriptive name you gave your certificate, and boom, full OpenVPN config file, complete with embedded certificates!</p><h3>Final Thoughts </h3><p>For each device, a new certificate, override, gateway and static route will be needed. You can’t just re-use the same certificate over and over as whenever that certificate connects, it will be treated like your travel router, so if it’s not, things will start to get weird. This is why this is device-based, as each device needs all the configuration listed above.</p><p>I’ll put the connecting of OpenWRT in a separate post, since this one is starting to get a bit long. The connecting is fairly straightforward, it’s the routing that can get a bit weird. </p>
+        </div>
+      </article>
+      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+    </div>
+    <footer>
+      <span>© <span class="yr">2023</span> Taylor Chien</span>
+      <span>recovered from the archive</span>
+    </footer>
+  </main>
+</body>
+</html>
