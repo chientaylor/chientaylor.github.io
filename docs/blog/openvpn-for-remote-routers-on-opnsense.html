@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenVPN for remote routers on OPNSense — taylor@taypc6</title>
+  <title>OpenVPN for remote routers on OPNSense — Computer Systems Enthusiast</title>
   <meta name="description" content="What if you could ship a device to someone with a working router, and when they connected it, you could connect through it just like you were on that " />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/openvpn-for-remote-routers-on-opnsense</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> openvpn-for-remote-routers-on-opnsense.md</p>
-      <article class="post">
-        <h1>OpenVPN for remote routers on OPNSense</h1>
-        <div class="post-meta"><span class="date">Jun 2, 2023</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Linux Ramblings</span><span class="cat">Random Projects</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">OpenVPN for remote routers on OPNSense</h1>
+      <div class="entry-meta"><span class="date">Jun 2, 2023</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Linux Ramblings</span><span class="cat">Random Projects</span></span></div>
+      <div class="prose">
 <p>What if you could ship a device to someone with a working router, and when they connected it, you could connect through it just like you were on that remote network. If you wanted, you could even move it to another place, or even use it with a cellular modem, with all the benefits of being local?</p><p>One of the frustrations of this process is that it’s not as straightforward as you might think. Or rather, it is as straightforward as you think, but the way to do it isn’t what’s advertised on the tin, so to speak.</p><h2>OpenVPN on OPNSense</h2><p>To start, I’m using an OpenVPN server. I’m not going to go too in depth with that setup, because it’s actually quite straightforward and well documented. You need to set up a CA, and then a Certificate for your OpenVPN server.</p><p>Where this starts to get a bit strange is the next step. Our devices are going to be OpenWRT running on a variety of ARM SBCs and travel routers. We need the ability for them all to connect in, possibly at the same time, with no intervention, but critically, with no storing of plaintext credentials on the remote device. This will be an SSL/TLS only setup.</p>
 
 <img loading="lazy" src="images/606810f0-9c66-4768-b559-feb2387bd230.png"/>
@@ -81,14 +83,15 @@
 
 
 <p>Click on the little download icon next to the Descriptive name you gave your certificate, and boom, full OpenVPN config file, complete with embedded certificates!</p><h3>Final Thoughts </h3><p>For each device, a new certificate, override, gateway and static route will be needed. You can’t just re-use the same certificate over and over as whenever that certificate connects, it will be treated like your travel router, so if it’s not, things will start to get weird. This is why this is device-based, as each device needs all the configuration listed above.</p><p>I’ll put the connecting of OpenWRT in a separate post, since this one is starting to get a bit long. The connecting is fairly straightforward, it’s the routing that can get a bit weird. </p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2023</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2023 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

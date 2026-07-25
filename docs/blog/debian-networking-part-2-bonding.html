@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Debian Networking Part 2 - Bonding — taylor@taypc6</title>
+  <title>Debian Networking Part 2 - Bonding — Computer Systems Enthusiast</title>
   <meta name="description" content="Bonded InterfacesBonds are multiple network interfaces that are joined into one single logical interface. These can be used to increase throughput, de" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/debian-networking-part-2-bonding</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> debian-networking-part-2-bonding.md</p>
-      <article class="post">
-        <h1>Debian Networking Part 2 - Bonding</h1>
-        <div class="post-meta"><span class="date">Mar 24, 2018</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Debian Networking</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">Debian Networking Part 2 - Bonding</h1>
+      <div class="entry-meta"><span class="date">Mar 24, 2018</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Debian Networking</span></span></div>
+      <div class="prose">
 <h2>Bonded Interfaces</h2><p>Bonds are multiple network interfaces that are joined into one single logical interface. These can be used to increase throughput, decrease latency, or fail over to a second link in the case of an outage.</p><h3>Multiple Interface Bonding with LACP</h3><p>LACP, or 802.3ad, is an Ethernet protocol used to bond multiple lines into a single logical line. It requires support from the switch, the same link speed across all interfaces, and some extra configuration, but it is very simple to set up and very reliable if done correctly.</p><pre><code># Bonded Interface Debian Network Configuration
 ## The loopback interface
 auto lo
@@ -128,14 +130,15 @@ iface bond0 inet dhcp
  pre-up ifup eth0 wlan0            # This enables all three interfaces before this bond goes up
  post-down ifdown eth0 wlan0       # This disables all three interfaces after the bond goes down
 </code></pre>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2018</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2018 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OpenVSwitch, VLANs, and Addresses - PVE Networking Part 5 — taylor@taypc6</title>
+  <title>OpenVSwitch, VLANs, and Addresses - PVE Networking Part 5 — Computer Systems Enthusiast</title>
   <meta name="description" content="Why OpenVSwitchThe integrated Linux Bridge module for PVE works fine in most cases, but for where it doesn’t there’s OpenVSwitch. I’ve always had issu" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/openvswitch-vlans-and-addresses-pve-networking-part-5</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> openvswitch-vlans-and-addresses-pve-networking-part-5.md</p>
-      <article class="post">
-        <h1>OpenVSwitch, VLANs, and Addresses - PVE Networking Part 5</h1>
-        <div class="post-meta"><span class="date">Jun 5, 2023</span><span class="cats"><span class="cat">Debian Networking</span><span class="cat">Linux Networking</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">OpenVSwitch, VLANs, and Addresses - PVE Networking Part 5</h1>
+      <div class="entry-meta"><span class="date">Jun 5, 2023</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Debian Networking</span><span class="cat">Linux Networking</span></span></div>
+      <div class="prose">
 <h2>Why OpenVSwitch</h2><p>The integrated Linux Bridge module for PVE works fine in most cases, but for where it doesn’t there’s OpenVSwitch. I’ve always had issues with OVS, for reasons that don’t make a lot of sense to me, but I recently had an issue where I needed to switch over to OVS, since the standard Linux Bridge just couldn’t cut it anymore.</p><p>I use the <a href="https://pve.proxmox.com/wiki/Software_Defined_Network" rel="noopener" target="_blank">PVE SDN</a> module, and it can cause some conflicts with the way VLANs are handled by the bridging module, specifically adding IPs to VLANs. In short, you cannot have multiple VLAN interfaces connecting to the same VLAN, as it creates a conflicting interface on the bridge. This is where OVS saves the day.</p><p>The reason for this is that instead of configuring an interface, OVS functions like plugging something into a switch, except it’s virtual. OVS doesn’t care that multiple things are connecting to the same VLAN.</p><h3>Network Layout</h3><p>Now, I want the VMs on this host to have access to VLANs 1 through 10, but I also need the host to have IPs on VLANs 6 and 10. Using the SDN module means I’m not connecting to a bridge with an added-on VLAN tag, I’m connecting to a bridge that’s already on that VLAN. This makes migration and access control a little easier, especially since it cuts down on the bloat in the interfaces file. </p><p>The downside with this being experimental is that, while it works, it doesn’t always play nice with the system. For example, it can create conflicts, and because of the way Linux Bridging works, it can even create duplicates, one configuration with the IP, and another without.</p><p>Normally this isn’t a problem, since all my other systems have dedicated management and storage networks. However, I have one system which only has a single interface and zero expandability. If I wanted to keep using the SDN system, I needed another solution.</p><p>The great thing about the SDN module is that it seems to not care about the back end, it will create the interfaces automatically so that they work with either Linux Bridging or OVS.</p><h3>PVE Steps</h3><p>A few packages are needed to get this to work, both the <a href="https://pve.proxmox.com/wiki/Software_Defined_Network" rel="noopener" target="_blank">SDN System</a> and <a href="https://pve.proxmox.com/wiki/Open_vSwitch" rel="noopener" target="_blank">OpenVSwitch</a> </p><pre><code>apt update
 apt install libpve-network-perl ifupdown2 openvswitch-switch</code></pre><p>Once those packages are installed, most of the work can be done through the GUI, where the SDN system and the networking are configured.</p><h3>/etc/network/interfaces</h3><pre><code>auto lo
 iface lo inet loopback
@@ -93,14 +95,15 @@ iface vmbr0 inet manual
 
 source /etc/network/interfaces.d/*
 </code></pre>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2023</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2023 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

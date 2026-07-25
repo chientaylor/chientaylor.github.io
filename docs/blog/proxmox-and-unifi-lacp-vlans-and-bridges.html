@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proxmox and UniFi: LACP, VLANs, and Bridges — taylor@taypc6</title>
+  <title>Proxmox and UniFi: LACP, VLANs, and Bridges — Computer Systems Enthusiast</title>
   <meta name="description" content="I’ve been having some issues with my UniFi US-16-XG 10g SFP+ Switch. Occasionally, for no reason, one member of an LACP link will drop with Tx/Rx erro" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/proxmox-and-unifi-lacp-vlans-and-bridges</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> proxmox-and-unifi-lacp-vlans-and-bridges.md</p>
-      <article class="post">
-        <h1>Proxmox and UniFi: LACP, VLANs, and Bridges</h1>
-        <div class="post-meta"><span class="date">Apr 8, 2021</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Linux Ramblings</span><span class="cat">Debian Networking</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">Proxmox and UniFi: LACP, VLANs, and Bridges</h1>
+      <div class="entry-meta"><span class="date">Apr 8, 2021</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Linux Ramblings</span><span class="cat">Debian Networking</span></span></div>
+      <div class="prose">
 <p>I’ve been having some issues with my UniFi US-16-XG 10g SFP+ Switch. Occasionally, for no reason, one member of an LACP link will drop with Tx/Rx errors, or revert from 10g to 1g and drop out of the LACP bond, or simply stop working altogether. This has happened on my Proxmox servers, on my TrueNAS Storage server, on the connection from my PFSense Router, and even when I tried from another UniFi switch, or a gigabit HP switch.</p><p>At first I thought it was the cheap Direct-Attach Cables (DACs) I bought for something like $10 on Amazon. So I did the logical step of replacing literally all of them with known-compatible SFP+ Fiber modules. The problem was, I saw identical behavior afterwards, and now I knew it wasn’t SFP module compatibility. There was something else going on here.</p><p>After looking around, I found <a href="https://help.ui.com/hc/en-us/articles/360007279753-UniFi-USW-Configuring-Link-Aggregation-Groups-LAG-" rel="noopener" target="_blank">this help doc</a>. It gives me enough of an idea of what is supposed to happen to try and figure out the problem. While the GUI doesn’t give any detailed errors, the commands on that page were able to point me in the right direction.</p><p>To access the US-16-XG’s terminal for debug purposes, you first have to SSH in, then telnet to localhost. This gives you access to the CLI. Any changes here seem to be reset after reboot, which isn’t too surprising, since the controller would wipe them anyways.</p>
 
 <img loading="lazy" src="images/1617883216373-34F58UUN5QQZISG35Z93.png"/>
@@ -87,14 +89,15 @@ iface vmbr0.101:254 inet static
         address 10.1.2.1/23
         gateway 10.1.3.254</pre>
 <p>The important part to connect to the switch is the configuration of the bond0 interface. The issue seems to have been that, without the <code>bond-lacp-rate</code> item, LACPDUs weren’t being transmitted at all.</p><h2>Other Devices</h2><p>I mentioned I was also having issues with a TrueNAS server and an HP switch. </p><p>The TrueNAS server issue seems to be related to the way TrueNAS boots with the interfaces enabled, and starts sending the LACPDUs later. The switch marks the errors, but doesn’t clear them when the LACP link is established.</p><p>The HP switch just doesn’t seem to care what order things happen in. My working theory is that one or the other doesn’t support LACP Fast Mode, which sends the LACPDUs at a much faster rate, and one or the other cannot do anything but fast mode.</p><p>Regardless, I don’t appear to be the only person having these issues. Numerous other bugs and issues have been noted on Ubiquiti’s forums, and on Reddit.</p><h2>Conclusion</h2><p>UniFi switches have always had issues with more complex configurations. Whether it’s 10G issues on their own SFPs, or issues with LACP compatibility, I and a lot of other people have had a lot of issues with the way UniFi implements their switches.</p><p>Unfortunately, for what I need, they’re the only option. Aruba’s InstantOn doesn’t have 10G switches at this point, Netgear, DLink, and MikroTik don’t have the features or reliability I need, and buying used enterprise switches is both expensive and loud for something that sits about a meter from my head.</p><p>One day, hopefully either my switch works better, or there’s an alternative that just works. Until then, I’ll be finding weird stuff like this.</p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2021</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2021 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

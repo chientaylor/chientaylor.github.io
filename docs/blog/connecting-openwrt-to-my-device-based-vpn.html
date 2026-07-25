@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connecting OpenWRT to my Device-based VPN — taylor@taypc6</title>
+  <title>Connecting OpenWRT to my Device-based VPN — Computer Systems Enthusiast</title>
   <meta name="description" content="If you’ve seen my previous post on this, I set up a VPN for connecting devices and their remote networks back to my home network. Now, we’re going to " />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/connecting-openwrt-to-my-device-based-vpn</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> connecting-openwrt-to-my-device-based-vpn.md</p>
-      <article class="post">
-        <h1>Connecting OpenWRT to my Device-based VPN</h1>
-        <div class="post-meta"><span class="date">Jun 3, 2023</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Random Projects</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">Connecting OpenWRT to my Device-based VPN</h1>
+      <div class="entry-meta"><span class="date">Jun 3, 2023</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Linux Networking</span><span class="cat">Random Projects</span></span></div>
+      <div class="prose">
 <p>If you’ve seen my <a href="https://tchien.com/technical-ramblings/2023/6/2/connecting-openwrt-to-opnsense-with-openvpn" rel="noopener" target="_blank">previous post</a> on this, I set up a VPN for connecting devices and their remote networks back to my home network. Now, we’re going to deal with the remote devices in question.</p><p>Please note, <strong>THIS DOES NOT TAKE FIREWALL RULES INTO ACCOUNT</strong>. I’m not going over firewall settings because the way I want to use my network might be different from how you want to use yours. It’s up to you to determine how you want to use your firewall, and how much security you want (if any). The way I set this up, <strong>ANY DEVICE </strong>this OpenWRT device serves will connect <strong>BY DEFAULT </strong>back through your OpenVPN network.</p><h2>OpenWRT Configuration</h2><p>Setting up the original OpenWRT device is up to you, I’m going to be using a ClearFog Pro for this example, since it has wired, WiFi, and a Cellular Modem.</p><p>First, get OpenWRT set up and working at a minimum. Mostly we need this because we need packages.</p><pre><code>opkg update
 opkg install luci-app-openvpn openvpn-openssl</code></pre><h3>OpenVPN Client</h3><p>The OpenVPN operation is pretty simple. Once the packages are installed, a new tab for VPN will appear at the top, with OpenVPN as a category within. Delete all the sample server configs, then under “OVPN configuration file upload” upload your config file, then enable it, and click ‘Save &amp; Apply” at the bottom.</p>
 
@@ -53,14 +55,15 @@ opkg install luci-app-openvpn openvpn-openssl</code></pre><h3>OpenVPN Client</h3
 
 
 <p>With this done (and Saved and Applied!) you should now be able to get from your OpenVPN server to your OpenVPN client (this device).</p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2023</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2023 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

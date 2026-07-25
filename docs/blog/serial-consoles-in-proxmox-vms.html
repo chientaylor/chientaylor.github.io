@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Serial Consoles in Proxmox VMs — taylor@taypc6</title>
+  <title>Serial Consoles in Proxmox VMs — Computer Systems Enthusiast</title>
   <meta name="description" content="The WhySerial consoles are a very efficient and very flexible way of accessing the terminals of a Linux VM. They allow copy-paste directly into the te" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/serial-consoles-in-proxmox-vms</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> serial-consoles-in-proxmox-vms.md</p>
-      <article class="post">
-        <h1>Serial Consoles in Proxmox VMs</h1>
-        <div class="post-meta"><span class="date">Feb 1, 2023</span><span class="cats"><span class="cat">Linux Ramblings</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">Serial Consoles in Proxmox VMs</h1>
+      <div class="entry-meta"><span class="date">Feb 1, 2023</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">Linux Ramblings</span></span></div>
+      <div class="prose">
 <h2>The Why</h2><p>Serial consoles are a very efficient and very flexible way of accessing the terminals of a Linux VM. They allow copy-paste directly into the terminal, access from the command line of the VM host itself, and can even be redirected to and from physical ports. I use them on all my Linux VMs, as I can simply pull up their terminals from inside the VM host if things go bad.</p>
 
 <img loading="lazy" src="images/480a08ea-f956-48b7-8ded-ddf69320e500.png"/>
@@ -31,14 +33,15 @@
 GRUB_TERMINAL=serial
 GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"
 # Remember to run 'sudo update-grub' afterwards</code></pre><p>That’s pretty much it. After this, it worked like a treat. Alpine didn’t even need this, since it seemed to redirect to the serial console as soon as it was available. </p><h2>FreeBSD</h2><p>FreeBSD by default does the console redirection as well, so no extra configuration was necessary for me. In the case where it doesn’t, there’s a tutorial <a href="https://people.freebsd.org/~blackend/en_US.ISO8859-1/books/handbook/serialconsole-setup.html" rel="noopener" target="_blank">here</a>.</p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2023</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2023 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

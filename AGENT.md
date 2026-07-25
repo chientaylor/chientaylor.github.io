@@ -14,12 +14,18 @@ domain **`www.taypc6.com`**. It is a static site with **no build step**.
   - `docs/index.html` — the home page (single, self-contained file: HTML, CSS,
     and a few lines of JS inline; no external dependencies).
   - `docs/blog/` — the "Technical Ramblings" blog: `index.html` (post listing),
-    one static `<slug>.html` per post, a shared `style.css` (same terminal
-    theme), and `images/` (post images). These posts were recovered from the
-    Internet Archive's capture of the old Squarespace site at `tchien.com`
-    (the Squarespace/WordPress XML export came back empty). Source of truth for
-    the recovery was the archived RSS feed. Posts are plain static HTML now —
-    edit them directly.
+    one static `<slug>.html` per post, a shared `style.css`, and `images/`
+    (post images). These posts were recovered from the Internet Archive's
+    capture of the old Squarespace site at `tchien.com` (the Squarespace/
+    WordPress XML export and the browser page-saves both came back as empty JS
+    shells). Source of truth for the recovery was the archived RSS feed. Posts
+    are plain static HTML now — edit them directly.
+    - **Theme:** the blog deliberately does NOT use the terminal theme. It
+      reproduces the old Squarespace (Brine/Clarkson) look — black background,
+      white serif body (Minion Pro → Georgia stack), green Futura-PT-style
+      headings, site title "Computer Systems Enthusiast" — since it's an
+      archived copy of the old site. Colors/metrics came from the archived
+      compiled site CSS. The rest of the site keeps the terminal theme.
   - `docs/CNAME` — custom-domain config for Pages (`www.taypc6.com`). Must live
     alongside the published content, i.e. inside `docs/`.
 - `README.md`, `AGENT.md` — repo docs. **Not** part of the published site; keep

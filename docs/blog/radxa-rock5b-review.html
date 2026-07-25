@@ -3,32 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radxa Rock5B Review — taylor@taypc6</title>
+  <title>Radxa Rock5B Review — Computer Systems Enthusiast</title>
   <meta name="description" content="This is a copy of a review I wrote for this device for a different blog in 2022:The Rock5B is an SBC with some very interesting features. This isn’t s" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/radxa-rock5b-review</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> radxa-rock5b-review.md</p>
-      <article class="post">
-        <h1>Radxa Rock5B Review</h1>
-        <div class="post-meta"><span class="date">Dec 22, 2022</span><span class="cats"><span class="cat">SBC Review</span><span class="cat">SBCs</span></span></div>
-        <div class="prose">
-<p>This is a copy of a review I wrote for this device for a different blog in 2022:</p><p>The Rock5B is an SBC with some very interesting features. This isn’t so much a review of the hardware (there’s a lot of stuff for that) as a review of the things that can run on it.</p><h2>3D Models</h2><p>One thing I have to give Radxa credit for is providing a full 3D model of the device. I used this to make a <a href="https://www.printables.com/model/345623-radxa-rock5b-case-for-cooler" rel="noopener" target="_blank">case</a> and <a href="https://www.printables.com/model/345229-radxa-rock-5b-ice-tower-low-profile-conversion-bra" rel="noopener" target="_blank">heatsink adapter</a> for the SBC.</p><p><a href="https://wiki.radxa.com/Rock5/hardware" rel="noopener" target="_blank">https://wiki.radxa.com/Rock5/hardware</a></p><h2>Gotchas</h2><p>2022-12-22</p><p>The board is incredibly picky about its choice of microSD card. None of my SanDisk cards worked at all, either in 16, 32, or 128 GB variants. In the end, my Samsung endurance and performance SD cards worked. I haven’t been able to test an NVME SSD or an eMMC yet.</p><p>Another issue is that when connected to the Steam Deck’s USB C charger, the board will start to boot, and then hard reset. Whether this is because of the Steam Deck’s implementation of PD, I don’t know, but I have to wait for USB C to C cables to test a proper charger.</p><h2>Radxa-provided OSes</h2><p>These images are provided by Radxa directly, so should have the best compatibility.</p><p><a href="https://wiki.radxa.com/Rock5/downloads" rel="noopener" target="_blank">https://wiki.radxa.com/Rock5/downloads</a></p><h3>Debian Bullseye (XFCE4)</h3><p>2022-12-22</p><p>Radxa provides a Desktop Debian image, and it boots as expected. It does have an issue where the apt GPG key for Radxa’s OS libraries is not pre-installed. It also defaults to using network-manager through the GUI, which is fine, since this is a desktop image. However, they have no server image for Debian.</p><p>Another issue that I had repeatedly was that performing an <code>apt upgrade</code> would sometimes just break the OS on reboot. It would lock up just before the lightdm initialized, which makes me think something from that broken apt repo was necessary for this to work right.</p><h3>Ubuntu Focal (Server)</h3><p>2022-12-22</p><p>The Ubuntu image was… odd. It’s Ubuntu 20.04, but it seems to be missing most of the network management features, defaulting to network-manager. Whatever they did to the Focal image, they had stripped so much away that it could barely be called Ubuntu at that point, which was a problem for my Ansible playbooks.</p><h3>Android 12</h3><p>2022-12-22</p><p>I could not get this to start, no matter what I used. Sometimes it would get to the initialization screen, and then crash. I tried all of my microSD cards, and none of them changed the boot looping. Eventually I gave up and moved on.</p><h2>Armbian</h2><p><a href="https://www.armbian.com/rock-5b/" rel="noopener" target="_blank">https://www.armbian.com/rock-5b/</a></p><h3>Bullseye Server</h3><p>2022-12-22</p><p>Armbian is a solid offering. The initial ssh in as root with the default password will prompt you to change the root password and set up your user. This is a fairly good idea, since it avoids having a default user on the OS. After this is done, the OS is somewhat clean, except for the Armbian APT repo.</p><h2>DietPi</h2><p><a href="https://dietpi.com/downloads/images/DietPi_ROCK5B-ARMv8-Bullseye.7z" rel="noopener" target="_blank">https://dietpi.com/downloads/images/DietPi_ROCK5B-ARMv8-Bullseye.7z</a></p><p>2022-12-23</p><p>I’m really starting to enjoy the DietPi system, as it makes automating an installation extremely straightforward. It also covers all the SBCs I care about, so I can deploy the same OS to all my SBCs.</p><p>For the Rock5B, the only issue I had was with the same SD card pickiness as before. I didn’t see anything hugely concerning or different during startup. Overall, this might actually be something I stick with, even though I’m not a huge fan of all the overhead.</p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
     </div>
-    <footer>
-      <span>© <span class="yr">2022</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">Radxa Rock5B Review</h1>
+      <div class="entry-meta"><span class="date">Dec 22, 2022</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">SBC Review</span><span class="cat">SBCs</span></span></div>
+      <div class="prose">
+<p>This is a copy of a review I wrote for this device for a different blog in 2022:</p><p>The Rock5B is an SBC with some very interesting features. This isn’t so much a review of the hardware (there’s a lot of stuff for that) as a review of the things that can run on it.</p><h2>3D Models</h2><p>One thing I have to give Radxa credit for is providing a full 3D model of the device. I used this to make a <a href="https://www.printables.com/model/345623-radxa-rock5b-case-for-cooler" rel="noopener" target="_blank">case</a> and <a href="https://www.printables.com/model/345229-radxa-rock-5b-ice-tower-low-profile-conversion-bra" rel="noopener" target="_blank">heatsink adapter</a> for the SBC.</p><p><a href="https://wiki.radxa.com/Rock5/hardware" rel="noopener" target="_blank">https://wiki.radxa.com/Rock5/hardware</a></p><h2>Gotchas</h2><p>2022-12-22</p><p>The board is incredibly picky about its choice of microSD card. None of my SanDisk cards worked at all, either in 16, 32, or 128 GB variants. In the end, my Samsung endurance and performance SD cards worked. I haven’t been able to test an NVME SSD or an eMMC yet.</p><p>Another issue is that when connected to the Steam Deck’s USB C charger, the board will start to boot, and then hard reset. Whether this is because of the Steam Deck’s implementation of PD, I don’t know, but I have to wait for USB C to C cables to test a proper charger.</p><h2>Radxa-provided OSes</h2><p>These images are provided by Radxa directly, so should have the best compatibility.</p><p><a href="https://wiki.radxa.com/Rock5/downloads" rel="noopener" target="_blank">https://wiki.radxa.com/Rock5/downloads</a></p><h3>Debian Bullseye (XFCE4)</h3><p>2022-12-22</p><p>Radxa provides a Desktop Debian image, and it boots as expected. It does have an issue where the apt GPG key for Radxa’s OS libraries is not pre-installed. It also defaults to using network-manager through the GUI, which is fine, since this is a desktop image. However, they have no server image for Debian.</p><p>Another issue that I had repeatedly was that performing an <code>apt upgrade</code> would sometimes just break the OS on reboot. It would lock up just before the lightdm initialized, which makes me think something from that broken apt repo was necessary for this to work right.</p><h3>Ubuntu Focal (Server)</h3><p>2022-12-22</p><p>The Ubuntu image was… odd. It’s Ubuntu 20.04, but it seems to be missing most of the network management features, defaulting to network-manager. Whatever they did to the Focal image, they had stripped so much away that it could barely be called Ubuntu at that point, which was a problem for my Ansible playbooks.</p><h3>Android 12</h3><p>2022-12-22</p><p>I could not get this to start, no matter what I used. Sometimes it would get to the initialization screen, and then crash. I tried all of my microSD cards, and none of them changed the boot looping. Eventually I gave up and moved on.</p><h2>Armbian</h2><p><a href="https://www.armbian.com/rock-5b/" rel="noopener" target="_blank">https://www.armbian.com/rock-5b/</a></p><h3>Bullseye Server</h3><p>2022-12-22</p><p>Armbian is a solid offering. The initial ssh in as root with the default password will prompt you to change the root password and set up your user. This is a fairly good idea, since it avoids having a default user on the OS. After this is done, the OS is somewhat clean, except for the Armbian APT repo.</p><h2>DietPi</h2><p><a href="https://dietpi.com/downloads/images/DietPi_ROCK5B-ARMv8-Bullseye.7z" rel="noopener" target="_blank">https://dietpi.com/downloads/images/DietPi_ROCK5B-ARMv8-Bullseye.7z</a></p><p>2022-12-23</p><p>I’m really starting to enjoy the DietPi system, as it makes automating an installation extremely straightforward. It also covers all the SBCs I care about, so I can deploy the same OS to all my SBCs.</p><p>For the Rock5B, the only issue I had was with the same SD card pickiness as before. I didn’t see anything hugely concerning or different during startup. Overall, this might actually be something I stick with, even though I’m not a huge fan of all the overhead.</p>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2022 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>

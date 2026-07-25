@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PoE Desktop - A Spontaneous Idea — taylor@taypc6</title>
+  <title>PoE Desktop - A Spontaneous Idea — Computer Systems Enthusiast</title>
   <meta name="description" content="The Original PlanWhat if I could have an OctoPrint server for my 3D printer powered only by PoE?Yeah, it’s dumb. If I already have the printer, then I" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar"><span class="path">taylor@taypc6: ~/blog/poe-desktop-a-spontaneous-idea</span></div>
-    <nav aria-label="Blog navigation">
-      <a href="../">home</a>
-      <a href="./">blog</a>
-    </nav>
-    <div class="screen">
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/blog</span><span class="sep">$ </span><span class="cmd">cat</span> poe-desktop-a-spontaneous-idea.md</p>
-      <article class="post">
-        <h1>PoE Desktop - A Spontaneous Idea</h1>
-        <div class="post-meta"><span class="date">Nov 24, 2020</span><span class="cats"><span class="cat">SBCs</span><span class="cat">Random Projects</span></span></div>
-        <div class="prose">
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="../">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="../">Home Page</a>
+        <a href="./">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="post">
+      <h1 class="entry-title">PoE Desktop - A Spontaneous Idea</h1>
+      <div class="entry-meta"><span class="date">Nov 24, 2020</span><span class="by">Taylor Chien</span><span class="cats"><span class="cat">SBCs</span><span class="cat">Random Projects</span></span></div>
+      <div class="prose">
 <h2>The Original Plan</h2><p>What if I could have an OctoPrint server for my 3D printer powered only by PoE?</p><p>Yeah, it’s dumb. If I already have the printer, then I have to have an outlet and a UPS nearby. Why PoE the Pi?</p><p>Because if this worked, I could possibly grab a few more of them and do this for all my Pis. It would save on USB space, since I’m still working on the universal 5V power system for my SBC lab. At the moment, I have three 10-port USB chargers running the lab, which are very annoying to cable manage, even though they work well.</p><p>The Raspberry Pi 3+ and 4 have four pins which, when hooked up to the right hat, can power the board with PoE. Figuring I could use this in a fun way, I ordered one for a spare 3+ I had acquired from someone at work.</p><p>It worked exactly as I expected. The moment I plugged the Pi’s Ethernet into a PoE port on my desk switch, it turned on. Working as advertised.</p><p>However, in the same Amazon box was something I had, in my haste, forgotten to take out of my cart; the ‘official’ Raspberry Pi 7” touchscreen.</p><p>I didn’t have anything to use with it except this Raspberry Pi 3+, not even a stand. I had been planning to save it for later and use it with a Pi 4 for something later on, but I had apparently not been paying attention when I ordered it. </p><p>The PoE hat covered the 5V and Ground pins completely, so I could either use this PoE hat and power the screen with USB, defeating the point of running PoE, or I could run the screen off the GPIO and take off the PoE hat, but I would still be using a cable.</p><p>After some annoyed grumblings about having to return one of the two, I happened to scroll down the PoE hat’s information page and saw something else I had missed. </p><p>The PoE hat had 5V and ground pins.</p><h2>“There was no Plan”</h2><p>I immediately decided that this little Pi wasn’t going to be my OctoPrint server anymore, despite the fact I had it all set up and ready to go. Instead, I would be creating a little PoE powered PC.</p><p>So I used the only stand I had available; the cardboard box the 7” touchscreen came in. I cut out a hole for the actual screen to fit in, figuring I would have to use tape or something to hold it in. </p><p>To show how not prepared for this, I was, I didn’t even have a proper cutting knife or flat-edge. I just grabbed a small, sharp kitchen knife, and free-handed most of it. The cutout was made by holding the back of the screen up to the cardboard and making marks in what I eyeballed was close enough to center. </p><p>It kinda worked. The screen didn’t fit on one side, so I trimmed back a bit more cardboard and popped it in.</p><p>My terrible cut job had pressure mounted the stupid screen in place perfectly. I didn’t even need to use tape or glue, it just stayed there because my terrible cutting job left ridges of cardboard that were now holding it in place.</p><p>Inside the box, I could assemble the rest of the Pi and screen. Pi on the screen, run the ribbon cable, then the GPIO power and finally the required cooling fa… oh.</p><h3>Cooling</h3><p>Now, normally, passive heat sinks would be fine, along with an open back. However, the PoE hat gets <strong>HOT</strong>. On the hat, there’s a small copper heatsink that I accidentally touched, and immediately burned myself. The PoE hat’s page also very explicitly states that this hat <strong>REQUIRES</strong> active cooling in an enclosed space.</p><p>I had a few 5V, 20mm fans from old Pi cases I had stopped using. I grabbed one and hooked it up, but the airflow was almost nonexistent. Not enough to cool the Pi, the hat, and the screen’s electronics.</p><p>So I did what anyone would do. </p><p>I grabbed a 120mm computer case fan and hooked it up to the second set of 5V power. </p>
 
 <img loading="lazy" src="images/1606276707064-DR4OL3ZJWMX3SFAFX35V.png"/>
@@ -35,14 +37,15 @@
 
 
 <h4>Links</h4><p>Screen - <a href="https://www.amazon.com/gp/product/B0153R2A9I/" rel="noopener" target="_blank">https://www.amazon.com/gp/product/B0153R2A9I</a></p><p>PoE Hat - <a href="https://www.amazon.com/gp/product/B07XB5PR9J/" rel="noopener" target="_blank">https://www.amazon.com/gp/product/B07XB5PR9J</a></p>
-        </div>
-      </article>
-      <p class="backlink"><a href="./">&larr; back to all posts</a></p>
-    </div>
-    <footer>
-      <span>© <span class="yr">2020</span> Taylor Chien</span>
-      <span>recovered from the archive</span>
-    </footer>
+      </div>
+    </article>
+    <p class="backlink"><a href="./">&larr; All posts</a></p>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="../">Home</a><a href="https://github.com/chientaylor">GitHub</a><a href="https://www.printables.com/@TaylorChien_156522">Printables</a></div>
+      <div>© 2020 Taylor Chien</div>
+    </div>
+  </footer>
 </body>
 </html>
