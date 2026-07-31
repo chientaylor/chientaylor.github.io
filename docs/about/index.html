@@ -3,47 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>about — taylor@taypc6</title>
+  <title>About — Computer Systems Enthusiast</title>
   <meta name="description" content="About Taylor Chien — Linux system administrator with a background in networking, automation, and hardware." />
-  <link rel="stylesheet" href="../terminal.css" />
+  <link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar">
-      <span class="path">taylor@taypc6: ~/about</span>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="/">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="/">Home Page</a>
+        <a href="/about/" aria-current="page">About</a>
+        <a href="/resume/">Resume</a>
+        <a href="/projects/">Projects</a>
+        <a href="/blog/">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="entry-title">About</h1>
+
+    <div class="prose">
+      <p>Linux systems administrator with a background in networking, automation, and
+      hardware. I keep high-availability infrastructure running at Clarkson University; before that I was
+      a cyber engineer at CACI. I automate whatever I can, run a sprawling home lab alongside a 150+-core
+      ARM/RISC-V/x86 testing cluster, and studied network and computer security at SUNY Poly — where I
+      researched hypervisor performance and ARM datacenters.</p>
     </div>
 
-    <nav aria-label="Sections">
-      <a href="../">home</a>
-      <a href="../about/" aria-current="page">about</a>
-      <a href="../resume/">resume</a>
-      <a href="../projects/">projects</a>
-      <a href="../blog/">blog</a>
-      <a href="../#contact">contact</a>
-    </nav>
-
-    <div class="screen">
-
-      <!-- about -->
-      <section id="about">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/about</span><span class="sep">$ </span><span class="cmd">cat</span> about.txt</p>
-        <div class="out">
-          <p style="margin:0">Linux systems administrator with a background in networking, automation, and
-          hardware. I keep high-availability infrastructure running at Clarkson University; before that I was
-          a cyber engineer at CACI. I automate whatever I can, run a sprawling home lab alongside a 150+-core
-          ARM/RISC-V/x86 testing cluster, and studied network and computer security at SUNY Poly — where I
-          researched hypervisor performance and ARM datacenters.</p>
-        </div>
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/about</span><span class="sep">$ </span><span class="cursor" aria-hidden="true"></span></p>
-      </section>
-
-    </div>
-
-    <footer>
-      <span>© <span id="year">2026</span> Taylor Chien</span>
-      <span>built with vim &amp; caffeine</span>
-    </footer>
+    <p class="backlink"><a href="/">&larr; Home</a></p>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="/">Home</a><a href="/resume/">Resume</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="https://github.com/chientaylor">GitHub</a></div>
+      <div>© <span id="year">2026</span> Taylor Chien</div>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

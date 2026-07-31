@@ -3,64 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>taylor@taypc6</title>
+  <title>Taylor Chien — Computer Systems Enthusiast</title>
   <meta name="description" content="Taylor Chien — Linux System Administrator. Networking, automation, and hardware." />
-  <link rel="stylesheet" href="terminal.css" />
+  <link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar">
-      <span class="path">taylor@taypc6: ~</span>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="/">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="/" aria-current="page">Home Page</a>
+        <a href="/about/">About</a>
+        <a href="/resume/">Resume</a>
+        <a href="/projects/">Projects</a>
+        <a href="/blog/">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="entry-title">Taylor Chien</h1>
+    <p class="lede">System Administration · Networking · Linux · Windows · Hardware</p>
+
+    <div class="prose">
+      <p>Linux systems administrator with a background in networking, automation, and
+      hardware. I keep high-availability infrastructure running, automate whatever I can,
+      and run a sprawling home lab alongside a 150+-core ARM/RISC-V/x86 testing cluster.</p>
     </div>
 
-    <nav aria-label="Sections">
-      <a href="about/">about</a>
-      <a href="resume/">resume</a>
-      <a href="projects/">projects</a>
-      <a href="blog/">blog</a>
-      <a href="#contact">contact</a>
-    </nav>
+    <ul class="pagelist">
+      <li class="page-row">
+        <a class="page-link" href="/about/">
+          <span class="row-title">About</span>
+          <span class="row-desc">Who I am and what I do.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/resume/">
+          <span class="row-title">Resume</span>
+          <span class="row-desc">Experience, education, and skills.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/projects/">
+          <span class="row-title">Projects</span>
+          <span class="row-desc">Home lab, the ARM fleet, and research.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/blog/">
+          <span class="row-title">Technical Ramblings</span>
+          <span class="row-desc">Notes on Linux, networking, ARM SBCs, and home-lab projects.</span>
+        </a>
+      </li>
+    </ul>
 
-    <div class="screen">
-
-      <!-- hero -->
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">whoami</span></p>
-      <div class="out tight">
-        <h1>Taylor Chien</h1>
-        <p class="tagline"><span class="k">System Administration</span> · <span class="k">Networking</span> · <span class="k">Linux</span> · <span class="k">Windows</span> · <span class="k">Hardware</span></p>
-      </div>
-
-      <!-- menu -->
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">ls</span> <span class="flag">-la</span> ~</p>
-      <div class="out">
-        <ul>
-          <li><a class="link" href="about/">about/</a> — who I am and what I do</li>
-          <li><a class="link" href="resume/">resume/</a> — experience, education, and skills</li>
-          <li><a class="link" href="projects/">projects/</a> — home lab, ARM fleet, and research</li>
-          <li><a class="link" href="blog/">blog/</a> — Technical Ramblings on Linux, networking, and SBCs</li>
-        </ul>
-      </div>
-
-      <!-- contact -->
-      <section id="contact">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">./contact.sh</span></p>
-        <div class="out">
-          <ul>
-            <li><span class="lead">email</span>→ <a class="link" href="mailto:taylor@taypc6.com">taylor@taypc6.com</a></li>
-            <li><span class="lead">github</span>→ <a class="link" href="https://github.com/chientaylor" rel="me">github.com/chientaylor</a></li>
-            <li><span class="lead">printables</span>→ <a class="link" href="https://www.printables.com/@TaylorChien_156522" rel="me">printables.com/@TaylorChien</a></li>
-          </ul>
-        </div>
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cursor" aria-hidden="true"></span></p>
-      </section>
-
-    </div>
-
-    <footer>
-      <span>© <span id="year">2026</span> Taylor Chien</span>
-      <span>built with vim &amp; caffeine</span>
-    </footer>
+    <ul class="contact-list">
+      <li><span class="k">Email</span> <a href="mailto:taylor@taypc6.com">taylor@taypc6.com</a></li>
+      <li><span class="k">GitHub</span> <a href="https://github.com/chientaylor" rel="me">github.com/chientaylor</a></li>
+      <li><span class="k">Printables</span> <a href="https://www.printables.com/@TaylorChien_156522" rel="me">printables.com/@TaylorChien</a></li>
+    </ul>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="/about/">About</a><a href="/resume/">Resume</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="https://github.com/chientaylor">GitHub</a></div>
+      <div>© <span id="year">2026</span> Taylor Chien</div>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
