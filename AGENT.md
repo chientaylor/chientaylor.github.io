@@ -11,8 +11,20 @@ domain **`www.taypc6.com`**. It is a static site with **no build step**.
 
 - `docs/` — the published site. GitHub Pages is configured to serve from this
   folder on the `main` branch.
-  - `docs/index.html` — the home page (single, self-contained file: HTML, CSS,
-    and a few lines of JS inline; no external dependencies).
+  - `docs/index.html` — the home page. Deliberately kept clean: hero (name +
+    tagline), a terminal-style menu linking to the sub-pages, and contact
+    links. Nothing else lives here.
+  - `docs/terminal.css` — the shared terminal theme. Linked by the home page
+    and every top-level sub-page. Same-origin local file (no CDN), so the site
+    still works offline. The blog is the one exception — it keeps its own theme
+    (`docs/blog/style.css`), see below.
+  - `docs/about/`, `docs/resume/`, `docs/projects/` — the content sub-pages,
+    each an `index.html` for a clean URL (`/about/`, `/resume/`, `/projects/`).
+    They share `terminal.css` and repeat the same window chrome (titlebar, nav,
+    footer). `resume/` holds experience + education + skills; `projects/` holds
+    projects + research; `about/` holds the bio. Nav links between pages are
+    relative (`../resume/` etc.); the current page is marked
+    `aria-current="page"`.
   - `docs/blog/` — the "Technical Ramblings" blog: `index.html` (post listing),
     one static `<slug>.html` per post, a shared `style.css`, and `images/`
     (post images). These posts were recovered from the Internet Archive's
@@ -35,8 +47,10 @@ domain **`www.taypc6.com`**. It is a static site with **no build step**.
 
 - **Theme:** terminal / retro — green-on-black, monospace, mock-terminal window
   with command-prompt section headers. Keep new content in that idiom.
-- **Self-contained:** no CDNs, external fonts, or JS frameworks. Inline any CSS
-  or JS. The page must load and work offline.
+- **Self-contained:** no CDNs, external fonts, or JS frameworks. Shared,
+  same-origin assets like `terminal.css` are fine (they work offline); just
+  keep everything local. Inline the small bits of per-page JS. The page must
+  load and work offline.
 - **Accessibility:** respect `prefers-reduced-motion` (disable the cursor blink,
   scanlines, and smooth scroll under it).
 - **Content status:** most copy is light placeholder mapped to résumé sections.

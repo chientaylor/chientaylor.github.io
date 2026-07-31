@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>projects — taylor@taypc6</title>
+  <meta name="description" content="Projects and research by Taylor Chien — home lab, a 150+-core ARM/RISC-V/x86 testing fleet, hypervisor benchmarking, and ARM datacenters." />
+  <link rel="stylesheet" href="../terminal.css" />
+</head>
+<body>
+  <main class="window">
+    <div class="titlebar">
+      <span class="path">taylor@taypc6: ~/projects</span>
+    </div>
+
+    <nav aria-label="Sections">
+      <a href="../">home</a>
+      <a href="../about/">about</a>
+      <a href="../resume/">resume</a>
+      <a href="../projects/" aria-current="page">projects</a>
+      <a href="../blog/">blog</a>
+      <a href="../#contact">contact</a>
+    </nav>
+
+    <div class="screen">
+
+      <!-- projects -->
+      <section id="projects">
+        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/projects</span><span class="sep">$ </span><span class="cmd">ls</span> ~/projects</p>
+        <div class="out">
+          <ul>
+            <li><span class="lead">home-lab/</span> — Proxmox VE hypervisors running Debian, Ubuntu, Alpine, and FreeBSD; TrueNAS Scale storage with geo-redundant backups. A permanent testbed for services.</li>
+            <li><span class="lead">arm-fleet/</span> — Mass-device testing cluster for automation at scale: 150+ CPU cores and 200&nbsp;GB RAM across 100+ ARM, RISC-V, and x86 boards.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- research -->
+      <section id="research">
+        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/projects</span><span class="sep">$ </span><span class="cmd">cat</span> research.txt</p>
+        <div class="out">
+          <div class="entry">
+            <div><span class="role">A Comparison of Pre-Built Hypervisors</span></div>
+            <div class="when">SUNY Poly · Independent Study · 2017</div>
+            <p class="desc">Benchmarked Proxmox VE, XenServer, Hyper-V, and VMware ESXi against a
+            bare-metal baseline across 14 Dell servers. Proxmox came out ahead — top scores on over half the
+            benchmarks, the most robust installer, and the richest feature set.</p>
+            <div class="repo"><a class="link" href="https://github.com/chientaylor/hypervisor-comparison-paper">github.com/chientaylor/hypervisor-comparison-paper</a></div>
+          </div>
+          <div class="entry">
+            <div><span class="role">Building an ARM-based Datacenter</span></div>
+            <div class="when">SUNY Poly · Independent Study · 2017</div>
+            <p class="desc">Built a small datacenter from ~18 heterogeneous ARM single-board computers
+            running LDAP, DNS, mail, and web apps, to see what enterprise services commodity ARM could deliver.
+            Conclusion: the consumer ARM ecosystem was still too fractured to rely on — though a few boards
+            (Odroid XU4, Udoo Quad) held up well throughout.</p>
+            <div class="repo"><a class="link" href="https://github.com/chientaylor/arm-datacenter-paper">github.com/chientaylor/arm-datacenter-paper</a></div>
+          </div>
+        </div>
+        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~/projects</span><span class="sep">$ </span><span class="cursor" aria-hidden="true"></span></p>
+      </section>
+
+    </div>
+
+    <footer>
+      <span>© <span id="year">2026</span> Taylor Chien</span>
+      <span>built with vim &amp; caffeine</span>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
