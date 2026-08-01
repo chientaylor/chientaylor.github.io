@@ -3,408 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>taylor@taypc6</title>
+  <title>Taylor Chien — Computer Systems Enthusiast</title>
   <meta name="description" content="Taylor Chien — Linux System Administrator. Networking, automation, and hardware." />
-  <style>
-    :root {
-      --bg:        #000000;
-      --panel:     #0b1013;
-      --panel-2:   #0e1519;
-      --border:    #16241d;
-      --fg:        #b8ffcf;
-      --dim:       #4f7d63;
-      --green:     #39ff88;
-      --green-2:   #17c46a;
-      --amber:     #ffcf4a;
-      --cyan:      #5fe0ff;
-      --magenta:   #ff6bd6;
-      --red:       #ff5f6b;
-      --shadow:    0 0 60px rgba(57,255,136,0.06);
-      --mono: "SFMono-Regular", "JetBrains Mono", "Fira Code", "Cascadia Code",
-              Menlo, Consolas, "DejaVu Sans Mono", monospace;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--mono);
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      padding: clamp(0.5rem, 3vw, 3rem);
-      display: flex;
-      justify-content: center;
-    }
-
-    /* subtle CRT scanline overlay */
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 0px,
-        rgba(0,0,0,0) 2px,
-        rgba(0,0,0,0.18) 3px,
-        rgba(0,0,0,0) 4px
-      );
-      opacity: 0.35;
-      z-index: 9999;
-      mix-blend-mode: overlay;
-    }
-
-    .window {
-      width: 100%;
-      max-width: 860px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: var(--shadow), 0 20px 50px rgba(0,0,0,0.6);
-      overflow: hidden;
-    }
-
-    /* title bar */
-    .titlebar {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1rem;
-      background: linear-gradient(var(--panel-2), var(--panel));
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      backdrop-filter: blur(4px);
-    }
-    .titlebar .path {
-      color: var(--dim);
-      font-size: 0.82rem;
-      letter-spacing: 0.03em;
-    }
-
-    /* nav */
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 1.2rem;
-      padding: 0.7rem 1.2rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel-2);
-      font-size: 0.88rem;
-    }
-    nav a {
-      color: var(--dim);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-    nav a::before { content: "./"; color: var(--green-2); opacity: 0.7; }
-    nav a:hover, nav a:focus { color: var(--green); outline: none; }
-
-    .screen { padding: clamp(1.2rem, 4vw, 2.4rem); }
-
-    /* prompt lines */
-    .line { margin: 0 0 0.25rem; }
-    .prompt { white-space: pre-wrap; word-break: break-word; }
-    .u   { color: var(--green); }
-    .at  { color: var(--dim); }
-    .h   { color: var(--cyan); }
-    .sep { color: var(--dim); }
-    .p   { color: var(--magenta); }
-    .cmd { color: var(--fg); }
-    .flag { color: var(--amber); }
-    .comment { color: var(--dim); font-style: italic; }
-
-    .out {
-      margin: 0.15rem 0 2.2rem;
-      padding-left: 0.2rem;
-      color: var(--fg);
-    }
-    .out.tight { margin-bottom: 1.4rem; }
-
-    h1 {
-      font-size: clamp(1.6rem, 6vw, 2.6rem);
-      margin: 0.4rem 0 0.2rem;
-      color: var(--green);
-      letter-spacing: 0.04em;
-      text-shadow: 0 0 18px rgba(57,255,136,0.35);
-    }
-    .tagline { color: var(--fg); margin: 0 0 0.4rem; }
-    .tagline .k { color: var(--cyan); }
-
-    section { scroll-margin-top: 4rem; }
-    h2 { display: none; } /* headings live in the prompt lines */
-
-    ul { list-style: none; margin: 0; padding: 0; }
-    .out li { position: relative; padding-left: 1.4rem; margin: 0.3rem 0; }
-    .out li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: var(--green-2);
-    }
-    .out li .lead { color: var(--amber); }
-    #contact .lead { display: inline-block; min-width: 6.5em; }
-
-    a.link {
-      color: var(--cyan);
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(95,224,255,0.4);
-    }
-    a.link:hover { color: var(--green); border-bottom-color: var(--green); }
-
-    /* skills grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 0.8rem;
-      margin: 0.3rem 0 2.2rem;
-    }
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.8rem 1rem;
-      background: var(--panel-2);
-    }
-    .card h3 {
-      margin: 0 0 0.5rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--green-2);
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .tag {
-      font-size: 0.78rem;
-      padding: 0.12rem 0.5rem;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--fg);
-      background: rgba(57,255,136,0.04);
-    }
-
-    /* experience / education / research rows */
-    .entry { margin: 0.2rem 0 1.5rem; }
-    .entry .role { color: var(--green); }
-    .entry .org { color: var(--cyan); }
-    .entry .when { color: var(--dim); font-size: 0.85rem; }
-    .entry .desc { margin: 0.35rem 0 0.4rem; }
-    .entry .repo { font-size: 0.85rem; }
-    .entry .repo::before { content: "└─ "; color: var(--dim); }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1rem 1.2rem;
-      color: var(--dim);
-      font-size: 0.8rem;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      background: var(--panel-2);
-    }
-    footer a { color: var(--dim); text-decoration: none; }
-    footer a:hover { color: var(--green); }
-
-    /* blinking cursor */
-    .cursor {
-      display: inline-block;
-      width: 0.55rem;
-      height: 1.05rem;
-      background: var(--green);
-      vertical-align: text-bottom;
-      margin-left: 2px;
-      animation: blink 1.1s steps(2, start) infinite;
-      box-shadow: 0 0 8px var(--green);
-    }
-    @keyframes blink { to { opacity: 0; } }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .cursor { animation: none; }
-      body::after { display: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-  <main class="window">
-    <div class="titlebar">
-      <span class="path">taylor@taypc6: ~</span>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="/">Computer Systems Enthusiast</a>
+      <nav class="site-nav">
+        <a href="/" aria-current="page">Home Page</a>
+        <a href="/about/">About</a>
+        <a href="/resume/">Resume</a>
+        <a href="/projects/">Projects</a>
+        <a href="/blog/">Technical Ramblings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="entry-title">Taylor Chien</h1>
+    <p class="lede">System Administration · Networking · Linux · Windows · Hardware</p>
+
+    <div class="prose">
+      <p>Linux systems administrator with a background in networking, automation, and
+      hardware. I keep high-availability infrastructure running, automate whatever I can,
+      and run a sprawling home lab alongside a 150+-core ARM/RISC-V/x86 testing cluster.</p>
     </div>
 
-    <nav aria-label="Sections">
-      <a href="#about">about</a>
-      <a href="#experience">experience</a>
-      <a href="#education">education</a>
-      <a href="#skills">skills</a>
-      <a href="#projects">projects</a>
-      <a href="#research">research</a>
-      <a href="blog/">blog</a>
-      <a href="#contact">contact</a>
-    </nav>
+    <ul class="pagelist">
+      <li class="page-row">
+        <a class="page-link" href="/about/">
+          <span class="row-title">About</span>
+          <span class="row-desc">Who I am and what I do.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/resume/">
+          <span class="row-title">Resume</span>
+          <span class="row-desc">Experience, education, and skills.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/projects/">
+          <span class="row-title">Projects</span>
+          <span class="row-desc">Home lab, the ARM fleet, and research.</span>
+        </a>
+      </li>
+      <li class="page-row">
+        <a class="page-link" href="/blog/">
+          <span class="row-title">Technical Ramblings</span>
+          <span class="row-desc">Notes on Linux, networking, ARM SBCs, and home-lab projects.</span>
+        </a>
+      </li>
+    </ul>
 
-    <div class="screen">
-
-      <!-- hero -->
-      <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">whoami</span></p>
-      <div class="out tight">
-        <h1>Taylor Chien</h1>
-        <p class="tagline"><span class="k">System Administration</span> · <span class="k">Networking</span> · <span class="k">Linux</span> · <span class="k">Windows</span> · <span class="k">Hardware</span></p>
-      </div>
-
-      <!-- about -->
-      <section id="about">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> about.txt</p>
-        <div class="out">
-          <p style="margin:0">Linux systems administrator with a background in networking, automation, and
-          hardware. I keep high-availability infrastructure running at Clarkson University; before that I was
-          a cyber engineer at CACI. I automate whatever I can, run a sprawling home lab alongside a 150+-core
-          ARM/RISC-V/x86 testing cluster, and studied network and computer security at SUNY Poly — where I
-          researched hypervisor performance and ARM datacenters.</p>
-        </div>
-      </section>
-
-      <!-- experience -->
-      <section id="experience">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">ls</span> <span class="flag">-la</span> ~/experience</p>
-        <div class="out">
-          <div class="entry">
-            <div><span class="role">Linux System Administrator</span> — <span class="org">Clarkson University</span></div>
-            <div class="when">Jan 2024 – Present · Potsdam, NY</div>
-            <ul>
-              <li>Migrated the virtualization environment from VxRail to Proxmox</li>
-              <li>Maintain multiple high-availability, business-critical systems</li>
-              <li>Leading the migration to Rocky Linux 9</li>
-              <li>Manage and maintain the Puppet environment and codebase</li>
-              <li>Part of a 24/7 on-call rotation</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <div><span class="role">Cyber Engineer T2</span> — <span class="org">CACI Inc.</span></div>
-            <div class="when">Nov 2018 – Jul 2023 · Rome, NY</div>
-            <ul>
-              <li>Built, secured, and automated in-house cloud environments for customers</li>
-              <li>Automated deployment and configuration of RHEL and Ubuntu guests — SaltStack, then Ansible</li>
-              <li>Managed segmented networks across Juniper, HPE, Force10, and Cisco switching</li>
-              <li>Stood up hypervisor clusters on ESXi and KVM</li>
-              <li>Worked in a small agile team and authored documentation to company standards</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- education -->
-      <section id="education">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> education.txt</p>
-        <div class="out">
-          <div class="entry">
-            <div><span class="role">B.S. in Network and Computer Security</span> — <span class="org">SUNY Polytechnic Institute</span></div>
-            <div class="when">Aug 2013 – May 2017 · Utica, NY</div>
-            <ul>
-              <li>GPA 3.47 overall, 3.72 in major; minor in Computer Information Systems</li>
-              <li>Researched hypervisors, ARM devices, and Linux system benchmarks for capstone and independent study</li>
-              <li>Worked part-time for the Computer Science department on web and network study</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- skills -->
-      <section id="skills">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> skills.txt</p>
-        <div class="grid">
-          <div class="card">
-            <h3>Automation</h3>
-            <div class="tags">
-              <span class="tag">Ansible</span><span class="tag">SaltStack</span><span class="tag">Puppet</span>
-              <span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">Kubernetes</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Operating Systems</h3>
-            <div class="tags">
-              <span class="tag">Debian</span><span class="tag">Ubuntu</span><span class="tag">RHEL / Rocky</span>
-              <span class="tag">FreeBSD</span><span class="tag">Proxmox</span><span class="tag">ESXi</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Networking</h3>
-            <div class="tags">
-              <span class="tag">Cisco</span><span class="tag">HPE / Aruba</span><span class="tag">Juniper</span>
-              <span class="tag">Force10</span><span class="tag">MikroTik</span><span class="tag">Cumulus</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Storage &amp; Hardware</h3>
-            <div class="tags">
-              <span class="tag">ZFS</span><span class="tag">TrueNAS</span><span class="tag">Servers</span>
-              <span class="tag">ARM SBCs</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- projects -->
-      <section id="projects">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">ls</span> ~/projects</p>
-        <div class="out">
-          <ul>
-            <li><span class="lead">home-lab/</span> — Proxmox VE hypervisors running Debian, Ubuntu, Alpine, and FreeBSD; TrueNAS Scale storage with geo-redundant backups. A permanent testbed for services.</li>
-            <li><span class="lead">arm-fleet/</span> — Mass-device testing cluster for automation at scale: 150+ CPU cores and 200&nbsp;GB RAM across 100+ ARM, RISC-V, and x86 boards.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- research -->
-      <section id="research">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">cat</span> research.txt</p>
-        <div class="out">
-          <div class="entry">
-            <div><span class="role">A Comparison of Pre-Built Hypervisors</span></div>
-            <div class="when">SUNY Poly · Independent Study · 2017</div>
-            <p class="desc">Benchmarked Proxmox VE, XenServer, Hyper-V, and VMware ESXi against a
-            bare-metal baseline across 14 Dell servers. Proxmox came out ahead — top scores on over half the
-            benchmarks, the most robust installer, and the richest feature set.</p>
-            <div class="repo"><a class="link" href="https://github.com/chientaylor/hypervisor-comparison-paper">github.com/chientaylor/hypervisor-comparison-paper</a></div>
-          </div>
-          <div class="entry">
-            <div><span class="role">Building an ARM-based Datacenter</span></div>
-            <div class="when">SUNY Poly · Independent Study · 2017</div>
-            <p class="desc">Built a small datacenter from ~18 heterogeneous ARM single-board computers
-            running LDAP, DNS, mail, and web apps, to see what enterprise services commodity ARM could deliver.
-            Conclusion: the consumer ARM ecosystem was still too fractured to rely on — though a few boards
-            (Odroid XU4, Udoo Quad) held up well throughout.</p>
-            <div class="repo"><a class="link" href="https://github.com/chientaylor/arm-datacenter-paper">github.com/chientaylor/arm-datacenter-paper</a></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- contact -->
-      <section id="contact">
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cmd">./contact.sh</span></p>
-        <div class="out">
-          <ul>
-            <li><span class="lead">email</span>→ <a class="link" href="mailto:taylor@taypc6.com">taylor@taypc6.com</a></li>
-            <li><span class="lead">github</span>→ <a class="link" href="https://github.com/chientaylor" rel="me">github.com/chientaylor</a></li>
-            <li><span class="lead">printables</span>→ <a class="link" href="https://www.printables.com/@TaylorChien_156522" rel="me">printables.com/@TaylorChien</a></li>
-          </ul>
-        </div>
-        <p class="line prompt"><span class="u">taylor</span><span class="at">@</span><span class="h">taypc6</span><span class="sep">:</span><span class="p">~</span><span class="sep">$ </span><span class="cursor" aria-hidden="true"></span></p>
-      </section>
-
-    </div>
-
-    <footer>
-      <span>© <span id="year">2026</span> Taylor Chien</span>
-      <span>built with vim &amp; caffeine</span>
-    </footer>
+    <ul class="contact-list">
+      <li><span class="k">Email</span> <a href="mailto:taylor@taypc6.com">taylor@taypc6.com</a></li>
+      <li><span class="k">GitHub</span> <a href="https://github.com/chientaylor" rel="me">github.com/chientaylor</a></li>
+      <li><span class="k">Printables</span> <a href="https://www.printables.com/@TaylorChien_156522" rel="me">printables.com/@TaylorChien</a></li>
+    </ul>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-links"><a href="/about/">About</a><a href="/resume/">Resume</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="https://github.com/chientaylor">GitHub</a></div>
+      <div>© <span id="year">2026</span> Taylor Chien</div>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
