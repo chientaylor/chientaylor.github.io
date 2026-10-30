@@ -25,15 +25,17 @@
     <h1 class="entry-title">Resume</h1>
 
     <div class="prose">
-      <h2>Experience</h2>
+      <h2>Relevant Experience</h2>
 
       <div class="cv-entry">
         <div><span class="cv-role">Linux System Administrator</span> — <span class="cv-org">Clarkson University</span></div>
         <div class="cv-when">Jan 2024 – Nov 2026 · Potsdam, NY</div>
         <ul>
+          <li>Led the move to Rocky Linux 9 and maintained the Puppet environment that configures the Linux servers</li>
           <li>Migrated the virtualization environment from VxRail to an 8-node Proxmox VE and Ceph cluster</li>
-          <li>Maintained multiple high-availability, critical systems</li>
-          <li>Was part of an on-call, 24/7 rotation</li>
+          <li>Brought a 153-switch Juniper fleet under Ansible baseline management, with offline compliance checks</li>
+          <li>Top contributor to Nagios monitoring for about 840 hosts: Linux and Windows servers, network gear, and UPSes</li>
+          <li>Maintained high-availability, critical systems as part of a 24/7 on-call rotation</li>
         </ul>
       </div>
 
@@ -41,8 +43,9 @@
         <div><span class="cv-role">Cyber Engineer T2</span> — <span class="cv-org">CACI Inc.</span></div>
         <div class="cv-when">Nov 2018 – Jul 2023 · Rome, NY</div>
         <ul>
-          <li>Worked as part of a small agile team performing hardware and software maintenance</li>
-          <li>Prepared documentation in line with company guidelines for publication</li>
+          <li>Built, secured, and automated in-house cloud environments for customers as part of a small agile team</li>
+          <li>Deployed ESXi and KVM hypervisor clusters and managed segmented Juniper, HPE, Force10, and Cisco networks</li>
+          <li>Automated the deployment and setup of RHEL and Ubuntu guests</li>
         </ul>
       </div>
 
@@ -54,45 +57,92 @@
         <ul>
           <li>GPA: 3.47 overall, 3.72 in major; minor in Computer Information Systems</li>
           <li>Performed research on hypervisors, ARM devices, and Linux system benchmarks for capstone and independent study</li>
-          <li>Worked part-time for the Computer Science department on web and network study</li>
+          <li>Worked part-time for the Computer Science department, then ran its networks for a year after graduating</li>
         </ul>
       </div>
 
-      <h2>Skills</h2>
+      <h2>Key Projects</h2>
+
+      <div class="cv-entry">
+        <div><span class="cv-role">VxRail to Proxmox VE Migration</span> — <span class="cv-org">Clarkson University</span></div>
+        <ul>
+          <li>Sized the move from VxRail to Proxmox VE and documented the migration process</li>
+          <li>Built a NAS to stage the source VMs, since vSAN could not be used as a migration source</li>
+          <li>Moved every VM onto the new 8-node Proxmox VE and Ceph cluster during a university break</li>
+          <li>Set per-OS VM baselines for Windows drivers, SCSI and CPU options, and storage, for uptime</li>
+          <li>Coordinated with the Windows, networking, and administration teams to finish with no service downtime</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div><span class="cv-role">Rocky Linux 9 Puppet Conversion</span> — <span class="cv-org">Clarkson University</span></div>
+        <div class="cv-when">Jan 2024 – Oct 2026</div>
+        <ul>
+          <li>Led the Rocky Linux 9 migration, with the Linux fleet configured by a Puppet 7 codebase</li>
+          <li>Top committer to that codebase, with more than half of its commits and per-server data for 187 servers</li>
+          <li>Deployed changes to production automatically through r10k, Hiera, and GitLab CI on every push</li>
+          <li>Wrote Puppet modules for HAProxy, break-glass access, network scanning, Ollama, and NVIDIA GPU drivers</li>
+          <li>Maintained the fleet's automated patching module, writing nearly all of its changes</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div><span class="cv-role">Customer Environment Automation</span> — <span class="cv-org">CACI Inc.</span></div>
+        <ul>
+          <li>Top contributor to SaltStack code for multiple customer environments, applied to production every night</li>
+          <li>Automated RHEL, CentOS, and Ubuntu baselines: SSH, CA trust, central logging, and Zabbix monitoring</li>
+          <li>Ran the internal certificate authority as SaltStack code, trusted on every host, plus Let's Encrypt</li>
+          <li>Built central logging on Graylog and Elasticsearch, with separate feeds for web, proxy, and DNS servers</li>
+          <li>Templated Apache reverse proxies and split-horizon BIND DNS; ran MinIO and Guacamole with LDAP sign-in on Docker</li>
+          <li>Rolled out OpenVAS vulnerability scanning with chat alerts, Snort intrusion detection, and RADIUS</li>
+          <li>Ported configuration from SaltStack to Ansible, with roles for Linux, FreeBSD, OpenBSD, and Cisco devices</li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div><span class="cv-role">Home Lab</span> — <span class="cv-org">Personal Network</span></div>
+        <ul>
+          <li>Two Proxmox VE clusters (9 nodes, 4.5 TB RAM), Proxmox Backup Server, TrueNAS Scale, and Juniper EX switching</li>
+          <li>Self-hosted GitLab CI, a fleet-wide Wazuh SIEM, Zabbix, BIND and Pi-hole DNS, and Docker Swarm services</li>
+          <li>30 hosts managed by OpenVox (Puppet) through GitLab CI and r10k; VMs built and enrolled by OpenTofu</li>
+          <li>3-node bare-metal Docker Swarm on an FRR OpenFabric 10 Gb mesh, with GlusterFS and a keepalived/Traefik VIP</li>
+          <li>Local LLMs (Gemma, Granite, Qwen) on vLLM and Ollama, including a vision model for camera hazard detection</li>
+        </ul>
+        <div class="repo"><a href="/projects/">More on the Projects page</a></div>
+      </div>
+
+      <h2>Technical Skills</h2>
 
       <h3>Software Skills</h3>
       <ul>
-        <li><strong>Ansible</strong> — Writing and porting playbooks and roles to different environments</li>
-        <li><strong>SaltStack</strong> — Experience using SaltStack to build environments from scratch using agent and agentless methods</li>
-        <li><strong>Puppet</strong> — Used Puppet to automate CI/CD against multiple architectures and environments</li>
+        <li><strong>Ansible</strong> — Proxmox/Ceph cluster automation, Juniper switch baselines, and porting a SaltStack codebase to Ansible</li>
+        <li><strong>SaltStack</strong> — Built customer environments from scratch with SaltStack, using agent and agentless methods</li>
+        <li><strong>Puppet</strong> — Top committer to a Puppet codebase for 187 Rocky Linux 9 servers; run OpenVox with r10k and CI at home</li>
         <li><strong>Other</strong> — ZFS, Ceph, Terraform/OpenTofu, Kubernetes, Docker</li>
       </ul>
 
       <h3>Operating Systems</h3>
       <ul>
-        <li><strong>Debian</strong> — First operating system used in my personal lab, have used it nonstop since then</li>
-        <li><strong>Ubuntu</strong> — Have been actively using it for as long as I've been using Debian, although more for work</li>
-        <li><strong>RedHat</strong> — Used RedHat and variants extensively at the places I've worked, including full automation and automated install</li>
-        <li><strong>FreeBSD</strong> — Used this for main storage servers at several places of work and personally for years</li>
-        <li><strong>Others</strong> — Proxmox; XenServer/XCP-NG; Hyper-V, ESXi/VMware, Windows Server/Desktop</li>
+        <li><strong>Linux</strong> — Debian, Ubuntu, and RHEL/Rocky, with automated installs and configuration management at work and home</li>
+        <li><strong>Windows</strong> — Windows Server and Desktop, Hyper-V, and Windows VM driver baselines for a Proxmox migration</li>
+        <li><strong>BSD</strong> — FreeBSD storage servers at several jobs and personally for years; OpenBSD automated via SaltStack and Ansible</li>
+        <li><strong>Other</strong> — Proxmox; XenServer/XCP-NG; ESXi/VMware</li>
       </ul>
 
       <h3>Network Devices</h3>
       <ul>
-        <li><strong>Cisco</strong> — Used router and switches in personal lab ever since my CCNA days in high school</li>
-        <li><strong>HPE</strong> — Have used multiple variants of the HPE switches, both Aruba and Comware-based</li>
-        <li><strong>Juniper</strong> — Have used this in small numbers in my time at CACI</li>
-        <li><strong>Others</strong> — Dell/Force10, MikroTik, Netgear, Cumulus</li>
+        <li><strong>Cisco</strong> — Cisco routers and switches in a personal lab since high school; Cisco device roles in an Ansible codebase</li>
+        <li><strong>HPE</strong> — HPE switches running both ArubaOS and Comware</li>
+        <li><strong>Juniper</strong> — Ansible baselines and compliance checks for a 153-switch fleet at work; an EX4550 Virtual Chassis at home</li>
+        <li><strong>Others</strong> — Dell/Force10, MikroTik, Netgear, Cumulus, OPNsense, pfSense, OpenWrt</li>
       </ul>
 
       <h3>Hardware</h3>
       <ul>
-        <li><strong>Servers</strong> — Almost a decade building, maintaining, and planning out physical servers and racking of all kinds</li>
-        <li><strong>ARM</strong> — Experience using and deploying SBCs from various vendors at scale</li>
+        <li><strong>Servers</strong> — Almost a decade of building, racking, and maintaining physical servers at work and at home</li>
+        <li><strong>ARM</strong> — A 150+ core lab of ARM, RISC-V, and x86 single-board computers, built to test mass deployment</li>
         <li><strong>Cameras</strong> — Axis, UniFi, and Reolink IP and PTZ cameras on an open-source NVR with GPU object detection</li>
       </ul>
-
-      <p>Home lab and ARM cluster details are on the <a href="/projects/">Projects</a> page.</p>
     </div>
 
     <p class="backlink"><a href="/">&larr; Home</a></p>
